@@ -17,7 +17,11 @@ daily runoff is computed through application of the HBV-96 of the HBV model. The
 grid cells offers the possibility to turn the HBV modelling concept, which is originally
 lumped, into a distributed model.
 
-The vertical HBV concept of the HBV model is explained in more detail in [HBV vertical
-concept](@ref).
+![wflow_hbv model](../images/hbv96.png)
+
+The figure above shows a schematic view of hydrological response simulation with the
+HBV-modelling concept. The land-phase of the hydrological cycle is represented by three
+different components: a snow routine, a soil routine and a runoff response routine. Each
+component is discussed separately in more detail in [HBV vertical concept](@ref).
 
 The routing for river and overland flow is described in [Kinematic wave](@ref).
