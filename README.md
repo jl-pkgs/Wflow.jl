@@ -1,9 +1,9 @@
 # Wflow
 
-[![Build Status](https://github.com/Deltares/Wflow.jl/workflows/CI/badge.svg)](https://github.com/Deltares/Wflow.jl/actions)
-[![Coverage](https://codecov.io/gh/Deltares/Wflow.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/Deltares/Wflow.jl)
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://deltares.github.io/Wflow.jl/dev)
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://deltares.github.io/Wflow.jl/stable)
+[![Build Status](https://github.com/jl-pkgs/Wflow.jl/workflows/CI/badge.svg)](https://github.com/jl-pkgs/Wflow.jl/actions)
+[![Coverage](https://codecov.io/gh/jl-pkgs/Wflow.jl/branch/kdd/graph/badge.svg)](https://codecov.io/gh/jl-pkgs/Wflow.jl)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://jl-pkgs.github.io/Wflow.jl/dev)
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://jl-pkgs.github.io/Wflow.jl/stable)
 [![DOI](https://zenodo.org/badge/246787232.svg)](https://zenodo.org/badge/latestdoi/246787232)
 [![ColPrac: Contributor's Guide on Collaborative Practices for Community Packages](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
 
@@ -13,8 +13,8 @@ run hydrological simulations. It is a continuation of the work available
 [here](https://github.com/openstreams/wflow).
 
 ## Documentation
-See [stable](https://deltares.github.io/Wflow.jl/stable) or
-[dev](https://deltares.github.io/Wflow.jl/dev) for the documentation.
+See [stable](https://jl-pkgs.github.io/Wflow.jl/stable) or
+[dev](https://jl-pkgs.github.io/Wflow.jl/dev) for the documentation.
 
 ## Installation
 For the installation enter the Pkg REPL by pressing `]` from the Julia REPL, and then

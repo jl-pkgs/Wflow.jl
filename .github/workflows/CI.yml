@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - kdd
     tags: '*'
 jobs:
   test:
