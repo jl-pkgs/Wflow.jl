@@ -23,11 +23,11 @@ function flowgraph(ldd::AbstractVector, inds::AbstractVector, pcr_dir::AbstractV
     return graph
 end
 
+# https://chatgpt.com/c/5bdd48f5-75a7-4e19-a7f9-23e067eaeb6a
 "Kinematic wave flow rate for a single cell and timestep"
-function kinematic_wave(Qin, Qold, q, alpha, beta, dt, dx)
-    epsilon = 1.0e-12
-    max_iters = 3000
-
+function kinematic_wave(Qin, Qold, q, alpha, beta, dt, dx; 
+    epsilon = 1.0e-12, max_iters = 3000)
+    
     if Qin + Qold + q ≈ 0.0
         return 0.0
     else
