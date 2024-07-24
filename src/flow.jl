@@ -285,7 +285,7 @@ function update(sf::SurfaceFlowRiver, network, doy)
     dt, its = stable_timestep(sf)
     for _ = 1:its
         sf.qin .= 0.0
-        for k = 1:ns
+        @inbounds for k = 1:ns
             threaded_foreach(eachindex(subdomain_order[k]), basesize = 1) do i
                 m = subdomain_order[k][i]
                 for (n, v) in zip(indices_subdomain[m], topo_subdomain[m])

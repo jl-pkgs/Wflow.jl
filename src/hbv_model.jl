@@ -82,21 +82,11 @@ function initialize_hbv_model(config::Config)
         k4,
         kquickflow=set_kquickflow ? kquickflow :
                    pow.(khq, 1.0 .+ alphanl) .* pow.(hq, -alphanl),
-        suz,
-        k0,
-        khq,
-        hq,
+        suz, k0,
+        khq, hq,
         alphanl,
-        perc,
-        cfr,
-        pcorr,
-        rfcf,
-        sfcf,
-        cflux,
-        icf,
-        cevpf,
-        epf,
-        ecorr,
+        perc, cfr, pcorr,
+        rfcf, sfcf, cflux, icf, cevpf, epf, ecorr,
         tti, tt, ttm,
         cfmax,
         whc,
@@ -137,14 +127,13 @@ function initialize_hbv_model(config::Config)
     )
 
     modelsize_2d = size(subcatch_2d)
-    river_2d =
-        ncread(nc, config, "river_location"; optional=false, type=Bool, fill=false)
+    river_2d = ncread(nc, config, "river_location"; optional=false, type=Bool, fill=false)
     river = river_2d[inds]
-    riverwidth_2d =
-        ncread(nc, config, "lateral.river.width"; optional=false, type=Float, fill=0)
+
+    riverwidth_2d = ncread(nc, config, "lateral.river.width"; optional=false, type=Float, fill=0)
     riverwidth = riverwidth_2d[inds]
-    riverlength_2d =
-        ncread(nc, config, "lateral.river.length"; optional=false, type=Float, fill=0)
+
+    riverlength_2d = ncread(nc, config, "lateral.river.length"; optional=false, type=Float, fill=0)
     riverlength = riverlength_2d[inds]
 
     inds_riv, rev_inds_riv = active_indices(river_2d, 0)
@@ -184,9 +173,7 @@ function initialize_hbv_model(config::Config)
     dl = map(detdrainlength, ldd, xl, yl)
     dw = (xl .* yl) ./ dl
     olf = initialize_surfaceflow_land(
-        nc,
-        config,
-        inds;
+        nc, config, inds;
         sl=landslope,
         dl=dl,
         width=map(det_surfacewidth, dw, riverwidth, river),
@@ -196,7 +183,6 @@ function initialize_hbv_model(config::Config)
     )
 
     graph = flowgraph(ldd, inds, pcr_dir)
-
     riverlength = riverlength_2d[inds_riv]
     riverwidth = riverwidth_2d[inds_riv]
     minimum(riverlength) > 0 || error("river length must be positive on river cells")
@@ -213,9 +199,7 @@ function initialize_hbv_model(config::Config)
     frac_toriver = fraction_runoff_toriver(graph, ldd, index_river, landslope, n)
 
     rf = initialize_surfaceflow_river(
-        nc,
-        config,
-        inds_riv;
+        nc, config, inds_riv;
         dl=riverlength,
         width=riverwidth,
         reservoir_index=resindex,

@@ -418,12 +418,12 @@ end
 
 # 2.5x faster power method
 "Faster method for exponentiation"
-pow(x, y) = exp(y * log(x))
+@fastmath pow(x::Real, y::Real) = exp(y * log(x))
 
 "Return the sum of the array `A` at indices `inds`"
 function sum_at(A, inds)
     v = zero(eltype(A))
-    for i in inds
+    @inbounds for i in inds
         v += A[i]
     end
     return v
