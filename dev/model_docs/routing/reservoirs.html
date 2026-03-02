@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -67,18 +67,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../_static/logo.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-00f2717a5a5cac2b5a5ee824cfb10320.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-67de5405eb3852df93bcc6e2ccbe6df3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-00f2717a5a5cac2b5a5ee824cfb10320.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-a919c6baa758de8ba7ea0eca57bc0c42.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-096cb68b894a4adbef7897a8646f0345.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-a919c6baa758de8ba7ea0eca57bc0c42.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -132,7 +133,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -321,7 +322,8 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../_static/logo.png" alt="" class="navbar-logo">
+    <img src="../../_static/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../../_static/logo.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Wflow.jl</span>
@@ -486,6 +488,12 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../model_docs/mass_balance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mass balance</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true">
@@ -519,6 +527,12 @@ window.Quarto = {
  <span class="menu-text">Routing concepts</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../model_docs/parameters_mass_balance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mass balance</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -538,6 +552,8 @@ window.Quarto = {
   <li><a href="#reservoir-parameters" id="toc-reservoir-parameters" class="nav-link" data-scroll-target="#reservoir-parameters">Reservoir parameters</a></li>
   <li><a href="#storage-and-rating-cuves-from-data" id="toc-storage-and-rating-cuves-from-data" class="nav-link" data-scroll-target="#storage-and-rating-cuves-from-data">Storage and rating cuves from data</a></li>
   </ul></li>
+  <li><a href="#external-inflows" id="toc-external-inflows" class="nav-link" data-scroll-target="#external-inflows">External inflows</a></li>
+  <li><a href="#using-observed-outflow" id="toc-using-observed-outflow" class="nav-link" data-scroll-target="#using-observed-outflow">Using observed outflow</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -569,12 +585,12 @@ window.Quarto = {
 <section id="general-settings" class="level2">
 <h2 class="anchored" data-anchor-id="general-settings">General settings</h2>
 <p>By default the reservoirs are not included in the model. To include them put the following lines in the TOML file of the model:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[model]</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir__flag</span> <span class="op">=</span> <span class="cn">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[model]</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir__flag</span> <span class="op">=</span> <span class="cn">true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Reservoir areas (coverage) and locations (outlet) are required and mapped between external and internal parameter names in the TOML file, with below an example:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[input]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[input]</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_area__count</span> <span class="op">=</span> <span class="st">"wflow_reservoirareas"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_location__count</span> <span class="op">=</span> <span class="st">"wflow_reservoirlocs"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_location__count</span> <span class="op">=</span> <span class="st">"wflow_reservoirlocs"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="reservoir-modelling" class="level2">
 <h2 class="anchored" data-anchor-id="reservoir-modelling">Reservoir modelling</h2>
@@ -642,43 +658,56 @@ window.Quarto = {
 <li>2 for <span class="math inline">\(S = f(H)\)</span> from reservoir data and interpolation</li>
 </ul>
 <p>Below an example of how the reservoir area, rating curve and storage curve types, required data for all reservoir types, are mapped between external and internal parameter names in the TOML file:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[input.static]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[input.static]</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_surface__area</span> <span class="op">=</span> <span class="st">"reservoir_area"</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water__rating_curve_type_count</span> <span class="op">=</span> <span class="st">"outflowfunc"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water__storage_curve_type_count</span> <span class="op">=</span> <span class="st">"storfunc"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water__storage_curve_type_count</span> <span class="op">=</span> <span class="st">"storfunc"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Including reservoir rating and storage curves from data (rating curve type 1 and storage curve type 2) is described <a href="#storage-and-rating-cuves-from-data">here</a>.</p>
 <p>For reservoir rating curve types 2 and 3 the following rating curve parameters need to be included in the TOML file, with below an example:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[input.static]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[input.static]</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water__rating_curve_coefficient</span> <span class="op">=</span> <span class="st">"reservoir_b"</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water__rating_curve_exponent</span> <span class="op">=</span> <span class="st">"reservoir_e"</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water_flow_threshold-level__elevation</span> <span class="op">=</span> <span class="st">"reservoir_threshold"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>A reservoir with rating curve type 2 can be linked to a downstream reservoir and return flow can be allowed from the downstream to the upstream reservoir. The input parameter <code>reservoir~lower_location__count</code> (standard name) represents the downstream reservoir location ID of the upstream lake location.</p>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water_flow_threshold_level__elevation</span> <span class="op">=</span> <span class="st">"reservoir_threshold"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A reservoir with rating curve type 2 can be linked to a downstream reservoir and return flow can be allowed from the downstream to the upstream reservoir. The input parameter <code>reservoir_lower_location__count</code> (standard name) represents the downstream reservoir location ID of the upstream lake location.</p>
 <p>For reservoir rating curve type 4, simple reservoir operational parameters need to included in the TOML file, with below an example:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[input.static]</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">"reservoir_water_demand~required~downstream__volume_flow_rate"</span> <span class="op">=</span> <span class="st">"ResDemand"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water_release-below-spillway__max_volume_flow_rate</span> <span class="op">=</span> <span class="st">"ResMaxRelease"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[input.static]</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water_demand__required_downstream_volume_flow_rate</span> <span class="op">=</span> <span class="st">"ResDemand"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water_release_below_spillway__max_volume_flow_rate</span> <span class="op">=</span> <span class="st">"ResMaxRelease"</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water__max_volume</span> <span class="op">=</span> <span class="st">"ResMaxVolume"</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dt">"reservoir_water~full-target__volume_fraction"</span> <span class="op">=</span> <span class="st">"ResTargetFullFrac"</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="dt">"reservoir_water~min-target__volume_fraction"</span> <span class="op">=</span> <span class="st">"ResTargetMinFrac"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water__target_full_volume_fraction</span> <span class="op">=</span> <span class="st">"ResTargetFullFrac"</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water__target_min_volume_fraction</span> <span class="op">=</span> <span class="st">"ResTargetMinFrac"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The complete list of reservoir input parameters that can be provided through the TOML file can be found <a href="../../model_docs/parameters_routing.html#reservoirs">here</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Please note that for reservoir input parameters (except <code>reservoir_lower_location__count</code>) missing values in the input data are not allowed, even if the parameter is not used by the reservoir type. For example, <code>reservoir_water__rating_curve_exponent</code> (for rating curve types 2 and 3) should also have a value (e.g.&nbsp;-1) for other input reservoir types.</p>
+</div>
+</div>
 </section>
 <section id="storage-and-rating-cuves-from-data" class="level3">
 <h3 class="anchored" data-anchor-id="storage-and-rating-cuves-from-data">Storage and rating cuves from data</h3>
 <p>Storage and rating curves from field measurement can be supplied to wflow via CSV files supplied in the same folder of the TOML file. Naming of the files uses the ID of the reservoirs where data are available and is of the form <code>reservoir_sh_1.csv</code> and <code>reservoir_hq_1.csv</code> for respectively the storage and rating curves of reservoir with ID 1.</p>
 <p>The storage curve is stored in a CSV file with reservoir level <span class="math inline">\(\SIb{}{m}\)</span> in the first column <code>H</code> and corresponding reservoir storage <span class="math inline">\(\SIb{}{m^3}\)</span> in the second column <code>S</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">H,</span>  S</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">H,</span>  S</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">392.21,</span> 0</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">393.21,</span> 430202000</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">393.71,</span> 649959000</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">394.21,</span> 869719000</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The rating curve uses level and discharge data depending on the Julian day of the year (JDOY). The first line contains <code>H</code> for the first column. The other lines contain the water level and the corresponding discharges for the different JDOY (1-365), see also the example below, that shows part of a CSV file (first 4 Julian days). The volume above the maximum water level of the rating curve is assumed to flow instantaneously out of the reservoir (overflow).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">H</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">394,</span>    43,     43,     43,     43</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">394.01,</span> 44.838, 44.838, 44.838, 44.838</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">394.02,</span> 46.671, 46.671, 46.671, 46.671</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">394.03,</span> 48.509, 48.509, 48.509, 48.509</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">394.04,</span> 50.347, 50.347, 50.347, 50.347</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">394.05,</span> 52.179, 52.179, 52.179, 52.179</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">394.21,</span> 869719000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The rating curve uses level and discharge data depending on the Julian day of the year (JDOY). The first line contains <code>H</code> for the first column, and values ranging from 1 to 365 for the other columns, representing the Julian days of the year. The other lines contain the water level and the corresponding discharges for the different JDOY (1-365), see also the example below, that shows part of a CSV file (first 4 Julian days and Julian day 365). The volume above the maximum water level of the rating curve is assumed to flow instantaneously out of the reservoir (overflow).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">H,</span>      1,      2,      3,      4,      ..., 365</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">394,</span>    43,     43,     43,     43,     ..., 43</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">394.01,</span> 44.838, 44.838, 44.838, 44.838, ..., 44.838</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">394.02,</span> 46.671, 46.671, 46.671, 46.671, ..., 46.671</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">394.03,</span> 48.509, 48.509, 48.509, 48.509, ..., 48.509</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">394.04,</span> 50.347, 50.347, 50.347, 50.347, ..., 50.347</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">394.05,</span> 52.179, 52.179, 52.179, 52.179, ..., 52.179</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -693,6 +722,20 @@ Note
 </div>
 </div>
 </section>
+</section>
+<section id="external-inflows" class="level2">
+<h2 class="anchored" data-anchor-id="external-inflows">External inflows</h2>
+<p>External inflows <span class="math inline">\(\SIb{}{m^3\ s^{-1}}\)</span> for example inflows that are not explicitly simulated by wflow or abstractions can be added to reservoirs, as a static or cyclic parameter or as part of forcing. For example, cyclic inflow can be provided in the TOML file as follows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[input.cyclic]</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water__external_inflow_volume_flow_rate</span> <span class="op">=</span> <span class="st">"reservoir_inflow"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These inflows are added or subtracted from the reservoir inflow. In case of an abstraction (negative inflow), the abstraction is limited by a fixed scaling factor of <span class="math inline">\(0.98\)</span> applied to reservoir storage. Negative external inflows are satisfied first, and the remaining reservoir storage is available for internal abstractions as part of water demand and allocation computations.</p>
+</section>
+<section id="using-observed-outflow" class="level2">
+<h2 class="anchored" data-anchor-id="using-observed-outflow">Using observed outflow</h2>
+<p>When reservoir observed outflow data is available, it is possble to use this data directly for computing the reservoir water balance rather than using a rating curve. This data can be provided as a static or cyclic parameter or as part of forcing. For example, cyclic observed outflow can be provided in the TOML file as follows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[input.cyclic]</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dt">reservoir_water__outgoing_observed_volume_flow_rate</span> <span class="op">=</span> <span class="st">"reservoir_outflow"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The reservoir outflow is not equal to the user-defined observed reservoir outflow in case not enough reservoir water storage is available. When missing data in the input netCDF file for observed reservoir outflow at a reservoir location is provided the rating curve of that reservoir location is used.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
@@ -769,13 +812,14 @@ Note
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

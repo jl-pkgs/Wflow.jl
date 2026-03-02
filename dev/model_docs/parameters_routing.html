@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -32,18 +32,19 @@ ul.task-list li input[type="checkbox"] {
 <link href="../_static/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-00f2717a5a5cac2b5a5ee824cfb10320.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-67de5405eb3852df93bcc6e2ccbe6df3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-00f2717a5a5cac2b5a5ee824cfb10320.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a919c6baa758de8ba7ea0eca57bc0c42.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-096cb68b894a4adbef7897a8646f0345.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-a919c6baa758de8ba7ea0eca57bc0c42.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -97,7 +98,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -286,7 +287,8 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../_static/logo.png" alt="" class="navbar-logo">
+    <img src="../_static/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../_static/logo.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Wflow.jl</span>
@@ -451,6 +453,12 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../model_docs/mass_balance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mass balance</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true">
@@ -482,6 +490,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../model_docs/parameters_routing.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Routing concepts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../model_docs/parameters_mass_balance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mass balance</span></a>
   </div>
 </li>
       </ul>
@@ -560,7 +574,7 @@ td, th {
   word-wrap: break-word;
 }
 </style>
-<p>Standard names in the Tables below that contain <code>instantaneous</code> in the <code>quantity</code> part of the standard name can be valid for an internal time step (for example for kinematic wave routing an internal time step is optional (and recommended), with a time step equal to the model simulation time step the standard name nonetheless contains <code>instantaneous</code>) and thus considered instantaneous compared to the model simulation time step Δt <span class="math inline">\(\SIb{}{s}\)</span>.</p>
+<p>Standard names for flow state variables in the Tables below that contain <code>instantaneous</code> in the <code>quantity</code> part of the standard name can be valid for an internal time step (depending on the model time simulation time step) and thus considered instantaneous compared to the model simulation time step Δt <span class="math inline">\(\SIb{}{s}\)</span>. These flow state variables can also be specified as a model output variable.</p>
 <section id="reservoirs" class="level2">
 <h2 class="anchored" data-anchor-id="reservoirs">Reservoirs</h2>
 <section id="input-generic-reservoir" class="level4">
@@ -626,51 +640,6 @@ td, th {
 <td>m³</td>
 <td>-</td>
 </tr>
-</tbody>
-</table>
-</section>
-<section id="static-or-cyclicforcing-input" class="level4">
-<h4 class="anchored" data-anchor-id="static-or-cyclicforcing-input">Static or cyclic/forcing input</h4>
-<table class="table-striped table-hover caption-top table">
-<colgroup>
-<col style="width: 40%">
-<col style="width: 33%">
-<col style="width: 13%">
-<col style="width: 13%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Standard Name</th>
-<th>Description</th>
-<th>Unit</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>reservoir_water_demand~required~downstream__volume_flow_rate</code></td>
-<td>Minimum (environmental) flow released from reservoir</td>
-<td>m³ s⁻¹</td>
-<td>-</td>
-</tr>
-<tr class="even">
-<td><code>reservoir_water_release-below-spillway__max_volume_flow_rate</code></td>
-<td>Maximum amount that can be released if below spillway</td>
-<td>m³ s⁻¹</td>
-<td>-</td>
-</tr>
-<tr class="odd">
-<td><code>reservoir_water~full-target__volume_fraction</code></td>
-<td>Target fraction full (of max storage)</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr class="even">
-<td><code>reservoir_water~min-target__volume_fraction</code></td>
-<td>Target minimum full fraction (of max storage)</td>
-<td>-</td>
-<td>-</td>
-</tr>
 <tr class="odd">
 <td><code>reservoir_water__rating_curve_coefficient</code></td>
 <td>Rating curve coefficient</td>
@@ -684,13 +653,13 @@ td, th {
 <td>-</td>
 </tr>
 <tr class="odd">
-<td><code>reservoir_water_flow_threshold-level__elevation</code></td>
+<td><code>reservoir_water_flow_threshold_level__elevation</code></td>
 <td>Water level threshold, below this level outflow is zero</td>
 <td>m</td>
 <td>-</td>
 </tr>
 <tr class="even">
-<td><code>reservoir~lower_location__count</code></td>
+<td><code>reservoir_lower_location__count</code></td>
 <td>Index of lower reservoir (linked reservoir)</td>
 <td>-</td>
 <td>0</td>
@@ -716,14 +685,66 @@ td, th {
 </tbody>
 </table>
 </section>
+<section id="static-or-cyclicforcing-input" class="level4">
+<h4 class="anchored" data-anchor-id="static-or-cyclicforcing-input">Static or cyclic/forcing input</h4>
+<table class="table-striped table-hover caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 33%">
+<col style="width: 13%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Standard Name</th>
+<th>Description</th>
+<th>Unit</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>reservoir_water_demand__required_downstream_volume_flow_rate</code></td>
+<td>Minimum (environmental) flow released from reservoir</td>
+<td>m³ s⁻¹</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><code>reservoir_water_release_below_spillway__max_volume_flow_rate</code></td>
+<td>Maximum amount that can be released if below spillway</td>
+<td>m³ s⁻¹</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td><code>reservoir_water__target_full_volume_fraction</code></td>
+<td>Target fraction full (of max storage)</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><code>reservoir_water__target_min_volume_fraction</code></td>
+<td>Target minimum full fraction (of max storage)</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td><code>reservoir_water__external_inflow_volume_flow_rate</code></td>
+<td>External inflow reservoir (negative for abstractions)</td>
+<td>m³ s⁻¹</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><code>reservoir_water__outgoing_observed_volume_flow_rate</code></td>
+<td>Observed outflow reservoir</td>
+<td>m³ s⁻¹</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="states" class="level4">
 <h4 class="anchored" data-anchor-id="states">States</h4>
 <table class="table-striped table-hover caption-top table">
-<colgroup>
-<col style="width: 42%">
-<col style="width: 42%">
-<col style="width: 14%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Standard Name</th>
@@ -733,7 +754,7 @@ td, th {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>reservoir_water_surface__instantaneous_elevation</code></td>
+<td><code>reservoir_water_surface__elevation</code></td>
 <td>Reservoir water level</td>
 <td>m</td>
 </tr>
@@ -762,36 +783,31 @@ td, th {
 <td>m³</td>
 </tr>
 <tr class="even">
-<td><code>reservoir_water__instantaneous_volume</code></td>
-<td>Reservoir volume</td>
-<td>m³</td>
-</tr>
-<tr class="odd">
 <td><code>reservoir_water_surface__elevation</code></td>
 <td>Reservoir water level</td>
 <td>m</td>
 </tr>
-<tr class="even">
-<td><code>reservoir_water~outgoing__volume_flow_rate</code></td>
+<tr class="odd">
+<td><code>reservoir_water__outgoing_volume_flow_rate</code></td>
 <td>Outflow of the reservoir</td>
 <td>m³ s⁻¹</td>
 </tr>
-<tr class="odd">
-<td><code>reservoir_water~incoming__volume_flow_rate</code></td>
+<tr class="even">
+<td><code>reservoir_water__incoming_volume_flow_rate</code></td>
 <td>Inflow into the reservoir</td>
 <td>m³ s⁻¹</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>reservoir_water__evaporation_volume_flux</code></td>
 <td>Average actual evaporation over the reservoir area</td>
 <td>mm Δt⁻¹</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>reservoir_water__precipitation_volume_flux</code></td>
 <td>Average precipitation over the reservoir area</td>
 <td>mm Δt⁻¹</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>reservoir_water__potential_evaporation_volume_flux</code></td>
 <td>Average potential evaporation over the reservoir area</td>
 <td>mm Δt⁻¹</td>
@@ -823,6 +839,18 @@ td, th {
 </thead>
 <tbody>
 <tr class="odd">
+<td><code>river__length</code></td>
+<td>River length</td>
+<td>m</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><code>river__width</code></td>
+<td>River width</td>
+<td>m</td>
+<td>-</td>
+</tr>
+<tr class="odd">
 <td><code>river_water_flow__manning_n_parameter</code></td>
 <td>Manning’s roughness</td>
 <td>s m<span class="math inline">\(^{-\frac{1}{3}}\)</span></td>
@@ -840,8 +868,29 @@ td, th {
 <td>m m⁻¹</td>
 <td>-</td>
 </tr>
-<tr class="even">
-<td><code>river_water_inflow~external__volume_flow_rate</code></td>
+</tbody>
+</table>
+</section>
+<section id="static-or-cyclicforcing-input-1" class="level4">
+<h4 class="anchored" data-anchor-id="static-or-cyclicforcing-input-1">Static or cyclic/forcing input</h4>
+<table class="table-striped table-hover caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 28%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Standard Name</th>
+<th>Description</th>
+<th>Unit</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>river_water__external_inflow_volume_flow_rate</code></td>
 <td>External inflow into the river (negative for abstractions)</td>
 <td>m³ s⁻¹</td>
 <td>-</td>
@@ -871,7 +920,7 @@ td, th {
 <td>m³ s⁻¹</td>
 </tr>
 <tr class="even">
-<td><code>river_water__instantaneous_depth</code></td>
+<td><code>river_water__depth</code></td>
 <td>River water depth</td>
 <td>m</td>
 </tr>
@@ -900,9 +949,9 @@ td, th {
 <td>m³ s⁻¹</td>
 </tr>
 <tr class="even">
-<td><code>river_water__depth</code></td>
-<td>River water depth</td>
-<td>m</td>
+<td><code>river_water__instantaneous_volume_flow_rate</code></td>
+<td>River discharge</td>
+<td>m³ s⁻¹</td>
 </tr>
 <tr class="odd">
 <td><code>river_water__volume</code></td>
@@ -910,17 +959,17 @@ td, th {
 <td>m³</td>
 </tr>
 <tr class="even">
-<td><code>river_water__instantaneous_volume</code></td>
-<td>River water volume</td>
-<td>m³</td>
+<td><code>river_water__depth</code></td>
+<td>River water depth</td>
+<td>m</td>
 </tr>
 <tr class="odd">
-<td><code>river_water_inflow~lateral__volume_flow_rate</code></td>
+<td><code>river_water__lateral_inflow_volume_flow_rate</code></td>
 <td>Lateral inflow into the river</td>
 <td>m³ s⁻¹</td>
 </tr>
 <tr class="even">
-<td><code>river_water_abstraction~external__volume_flow_rate</code></td>
+<td><code>river_water__external_abstraction_volume_flow_rate</code></td>
 <td>Actual abstraction based on external negative inflow</td>
 <td>m³ s⁻¹</td>
 </tr>
@@ -985,7 +1034,7 @@ td, th {
 <td>m³ s⁻¹</td>
 </tr>
 <tr class="even">
-<td><code>land_surface_water__instantaneous_depth</code></td>
+<td><code>land_surface_water__depth</code></td>
 <td>Water depth overland flow</td>
 <td>m</td>
 </tr>
@@ -1014,14 +1063,14 @@ td, th {
 <td>m³ s⁻¹</td>
 </tr>
 <tr class="even">
-<td><code>land_surface_water~to-river__volume_flow_rate</code></td>
-<td>Discharge overland flow that flows to the river</td>
+<td><code>land_surface_water__instantaneous_volume_flow_rate</code></td>
+<td>Discharge overland flow</td>
 <td>m³ s⁻¹</td>
 </tr>
 <tr class="odd">
-<td><code>land_surface_water__depth</code></td>
-<td>Water depth overland flow</td>
-<td>m</td>
+<td><code>land_surface_water__to_river_volume_flow_rate</code></td>
+<td>Discharge overland flow that flows to the river</td>
+<td>m³ s⁻¹</td>
 </tr>
 <tr class="even">
 <td><code>land_surface_water__volume</code></td>
@@ -1029,9 +1078,9 @@ td, th {
 <td>m³</td>
 </tr>
 <tr class="odd">
-<td><code>land_surface_water__instantaneous_volume</code></td>
-<td>Water volume overland flow</td>
-<td>m³</td>
+<td><code>land_surface_water__depth</code></td>
+<td>Water depth overland flow</td>
+<td>m</td>
 </tr>
 </tbody>
 </table>
@@ -1058,7 +1107,7 @@ td, th {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>subsurface_water__horizontal-to-vertical_saturated_hydraulic_conductivity_ratio</code></td>
+<td><code>subsurface_water__horizontal_to_vertical_saturated_hydraulic_conductivity_ratio</code></td>
 <td>A muliplication factor applied to vertical hydraulic conductivity</td>
 <td>-</td>
 <td>-</td>
@@ -1108,17 +1157,22 @@ td, th {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>subsurface_water_sat-zone_top__depth</code></td>
+<td><code>subsurface_water__volume_flow_rate</code></td>
+<td>Subsurface flow</td>
+<td>m³ day⁻¹</td>
+</tr>
+<tr class="even">
+<td><code>subsurface_water_saturated_zone_top__depth</code></td>
 <td>Pseudo-water table depth (top of the saturated zone)</td>
 <td>m</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>subsurface_water__exfiltration_volume_flux</code></td>
 <td>Exfiltration (groundwater above surface level, saturated excess conditions)</td>
 <td>mm Δt⁻¹</td>
 </tr>
-<tr class="odd">
-<td><code>subsurface_water~to-river__volume_flow_rate</code></td>
+<tr class="even">
+<td><code>subsurface_water__to_river_volume_flow_rate</code></td>
 <td>Part of subsurface flow that flows to the river</td>
 <td>m³ day⁻¹</td>
 </tr>
@@ -1156,7 +1210,7 @@ td, th {
 <td>-</td>
 </tr>
 <tr class="even">
-<td><code>model_boundary_condition~river__length</code></td>
+<td><code>model_boundary_condition_river__length</code></td>
 <td>Boundary condition river length downstream river outlets</td>
 <td>m</td>
 <td>10 000</td>
@@ -1168,7 +1222,7 @@ td, th {
 <td>-</td>
 </tr>
 <tr class="even">
-<td><code>model_boundary_condition~river_bank_water__depth</code></td>
+<td><code>model_boundary_condition_river_bank_water__depth</code></td>
 <td>Boundary condition bankfull depth downstream river outlets</td>
 <td>m</td>
 <td>0.0</td>
@@ -1192,7 +1246,7 @@ td, th {
 <td>0.0036</td>
 </tr>
 <tr class="even">
-<td><code>river_water_inflow~external__volume_flow_rate</code></td>
+<td><code>river_water__external_inflow_volume_flow_rate</code></td>
 <td>External inflow into the river (negative for abstractions)</td>
 <td>m³ s⁻¹</td>
 <td>-</td>
@@ -1222,7 +1276,7 @@ td, th {
 <td>m³ s⁻¹</td>
 </tr>
 <tr class="even">
-<td><code>river_water__instantaneous_depth</code></td>
+<td><code>river_water__depth</code></td>
 <td>River water depth</td>
 <td>m</td>
 </tr>
@@ -1251,22 +1305,22 @@ td, th {
 <td>m³ s⁻¹</td>
 </tr>
 <tr class="even">
+<td><code>river_water__instantaneous_volume_flow_rate</code></td>
+<td>River discharge</td>
+<td>m³ s⁻¹</td>
+</tr>
+<tr class="odd">
 <td><code>river_water__depth</code></td>
 <td>River water depth</td>
 <td>m</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>river_water__volume</code></td>
 <td>River water volume</td>
 <td>m³</td>
 </tr>
-<tr class="even">
-<td><code>river_water__instantaneous_volume</code></td>
-<td>River water volume</td>
-<td>m³</td>
-</tr>
 <tr class="odd">
-<td><code>river_water_abstraction~external__volume_flow_rate</code></td>
+<td><code>river_water__external_abstraction_volume_flow_rate</code></td>
 <td>Actual abstraction based on external negative inflow</td>
 <td>m³ s⁻¹</td>
 </tr>
@@ -1295,7 +1349,7 @@ td, th {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>floodplain_water__sum_of_volume-per-depth</code></td>
+<td><code>floodplain_water__sum_of_volume_per_depth</code></td>
 <td>Floodplain profile (cumulative volume per flood depth)</td>
 <td>m³</td>
 <td>-</td>
@@ -1331,7 +1385,7 @@ td, th {
 <td>m³ s⁻¹</td>
 </tr>
 <tr class="even">
-<td><code>floodplain_water__instantaneous_depth</code></td>
+<td><code>floodplain_water__depth</code></td>
 <td>Floodplain water depth</td>
 <td>m</td>
 </tr>
@@ -1341,6 +1395,11 @@ td, th {
 <section id="output-5" class="level4">
 <h4 class="anchored" data-anchor-id="output-5">Output</h4>
 <table class="table-striped table-hover caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 42%">
+<col style="width: 14%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Standard Name</th>
@@ -1355,12 +1414,17 @@ td, th {
 <td>m³</td>
 </tr>
 <tr class="even">
-<td><code>floodplain_water__instantaneous_volume</code></td>
-<td>Floodplain volume</td>
-<td>m³</td>
+<td><code>floodplain_water__depth</code></td>
+<td>Floodplain water depth</td>
+<td>m</td>
 </tr>
 <tr class="odd">
 <td><code>floodplain_water__volume_flow_rate</code></td>
+<td>Floodplain discharge</td>
+<td>m³ s⁻¹</td>
+</tr>
+<tr class="even">
+<td><code>floodplain_water__instantaneous_volume_flow_rate</code></td>
 <td>Floodplain discharge</td>
 <td>m³ s⁻¹</td>
 </tr>
@@ -1430,7 +1494,7 @@ td, th {
 <td>m³ s⁻¹</td>
 </tr>
 <tr class="odd">
-<td><code>land_surface_water__instantaneous_depth</code></td>
+<td><code>land_surface_water__depth</code></td>
 <td>Water depth</td>
 <td>m</td>
 </tr>
@@ -1454,17 +1518,22 @@ td, th {
 </thead>
 <tbody>
 <tr class="odd">
+<td><code>land_surface_water__x_component_of_instantaneous_volume_flow_rate</code></td>
+<td>Flow in x direction</td>
+<td>m³ s⁻¹</td>
+</tr>
+<tr class="even">
+<td><code>land_surface_water__y_component_of_instantaneous_volume_flow_rate</code></td>
+<td>Flow in y direction</td>
+<td>m³ s⁻¹</td>
+</tr>
+<tr class="odd">
 <td><code>land_surface_water__depth</code></td>
 <td>Water depth</td>
 <td>m</td>
 </tr>
 <tr class="even">
 <td><code>land_surface_water__volume</code></td>
-<td>Total surface water storage of cell (including river storage for river cells)</td>
-<td>m³</td>
-</tr>
-<tr class="odd">
-<td><code>land_surface_water__instantaneous_volume</code></td>
 <td>Total surface water storage of cell (including river storage for river cells)</td>
 <td>m³</td>
 </tr>
@@ -1508,12 +1577,6 @@ td, th {
 <td>-</td>
 </tr>
 <tr class="odd">
-<td><code>subsurface_water__specific_yield</code></td>
-<td>Specific yield</td>
-<td>m m⁻¹</td>
-<td>-</td>
-</tr>
-<tr class="even">
 <td><code>subsurface__horizontal_saturated_hydraulic_conductivity_scale_parameter</code></td>
 <td>Factor controlling the reduction of horizontal conductivity with depth</td>
 <td>-</td>
@@ -1522,8 +1585,27 @@ td, th {
 </tbody>
 </table>
 </section>
-<section id="output-gwf-unconfined" class="level4">
-<h4 class="anchored" data-anchor-id="output-gwf-unconfined">States</h4>
+<section id="state-gwf-unconfined" class="level4">
+<h4 class="anchored" data-anchor-id="state-gwf-unconfined">States</h4>
+<table class="table-striped table-hover caption-top table">
+<thead>
+<tr class="header">
+<th>Standard Name</th>
+<th>Description</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>subsurface_water__hydraulic_head</code></td>
+<td>Groundwater head</td>
+<td>m</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="output-7" class="level4">
+<h4 class="anchored" data-anchor-id="output-7">Output</h4>
 <table class="table-striped table-hover caption-top table">
 <thead>
 <tr class="header">
@@ -1580,12 +1662,6 @@ td, th {
 <td>m</td>
 <td>-</td>
 </tr>
-<tr class="even">
-<td><code>river_water_inflow~external__volume_flow_rate</code></td>
-<td>External inflow into the river (negative for abstractions)</td>
-<td>m³ s⁻¹</td>
-<td>-</td>
-</tr>
 </tbody>
 </table>
 </section>
@@ -1606,7 +1682,7 @@ td, th {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>river_water~to-subsurface__volume_flow_rate</code></td>
+<td><code>river_water__to_subsurface_volume_flow_rate</code></td>
 <td>Exchange flux (river to aquifer)</td>
 <td>m³ day⁻¹</td>
 </tr>
@@ -1666,7 +1742,7 @@ td, th {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>land_drain_water~to-subsurface__volume_flow_rate</code></td>
+<td><code>land_drain_water__to_subsurface_volume_flow_rate</code></td>
 <td>Exchange flux (drain to aquifer)</td>
 <td>m³ day⁻¹</td>
 </tr>
@@ -1693,7 +1769,7 @@ td, th {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>subsurface_water_sat-zone_top__net_recharge_volume_flow_rate</code></td>
+<td><code>subsurface_water_saturated_zone_top__net_recharge_volume_flow_rate</code></td>
 <td>Net recharge flux</td>
 <td>m³ day⁻¹</td>
 </tr>
@@ -1722,7 +1798,7 @@ td, th {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>model_boundary_condition~constant_hydraulic_head</code></td>
+<td><code>model_constant_boundary_condition__hydraulic_head</code></td>
 <td>Head of the boundary</td>
 <td>m</td>
 <td>-</td>
@@ -1785,13 +1861,13 @@ td, th {
 <td>200.0</td>
 </tr>
 <tr class="even">
-<td><code>sediment_aggregates~small__mean_diameter</code></td>
+<td><code>sediment_small_aggregates__mean_diameter</code></td>
 <td>Small aggregates mean diameter</td>
 <td>μm</td>
 <td>30.0</td>
 </tr>
 <tr class="odd">
-<td><code>sediment_aggregates~large__mean_diameter</code></td>
+<td><code>sediment_large_aggregates__mean_diameter</code></td>
 <td>Large aggregates mean diameter</td>
 <td>μm</td>
 <td>500.0</td>
@@ -1851,25 +1927,25 @@ td, th {
 <td>-</td>
 </tr>
 <tr class="even">
-<td><code>river_water_sediment__kodatie_transport_capacity_a-coefficient</code></td>
+<td><code>river_water_sediment__kodatie_transport_capacity_a_coefficient</code></td>
 <td>Kodatie transport capacity coefficient a</td>
 <td>-</td>
 <td>-</td>
 </tr>
 <tr class="odd">
-<td><code>river_water_sediment__kodatie_transport_capacity_b-coefficient</code></td>
+<td><code>river_water_sediment__kodatie_transport_capacity_b_coefficient</code></td>
 <td>Kodatie transport capacity coefficient b</td>
 <td>-</td>
 <td>-</td>
 </tr>
 <tr class="even">
-<td><code>river_water_sediment__kodatie_transport_capacity_c-coefficient</code></td>
+<td><code>river_water_sediment__kodatie_transport_capacity_c_coefficient</code></td>
 <td>Kodatie transport capacity coefficient c</td>
 <td>-</td>
 <td>-</td>
 </tr>
 <tr class="odd">
-<td><code>river_water_sediment__kodatie_transport_capacity_d-coefficient</code></td>
+<td><code>river_water_sediment__kodatie_transport_capacity_d_coefficient</code></td>
 <td>Kodatie transport capacity coefficient d</td>
 <td>-</td>
 <td>-</td>
@@ -1880,8 +1956,8 @@ td, th {
 </section>
 <section id="overland-flow-transport" class="level3">
 <h3 class="anchored" data-anchor-id="overland-flow-transport">Overland flow transport</h3>
-<section id="output-7" class="level4">
-<h4 class="anchored" data-anchor-id="output-7">Output</h4>
+<section id="output-8" class="level4">
+<h4 class="anchored" data-anchor-id="output-8">Output</h4>
 <table class="table-striped table-hover caption-top table">
 <colgroup>
 <col style="width: 42%">
@@ -1907,32 +1983,32 @@ td, th {
 <td>ton Δt⁻¹</td>
 </tr>
 <tr class="odd">
-<td><code>land_surface_water_sediment~to-river__mass_flow_rate</code></td>
+<td><code>land_surface_water_sediment__to_river_mass_flow_rate</code></td>
 <td>Total sediment flux flowing into the river</td>
 <td>ton Δt⁻¹</td>
 </tr>
 <tr class="even">
-<td><code>land_surface_water_clay~to-river__mass_flow_rate</code></td>
+<td><code>land_surface_water_clay__to_river_mass_flow_rate</code></td>
 <td>Clay flux flowing into the river</td>
 <td>ton Δt⁻¹</td>
 </tr>
 <tr class="odd">
-<td><code>land_surface_water_silt~to-river__mass_flow_rate</code></td>
+<td><code>land_surface_water_silt__to_river_mass_flow_rate</code></td>
 <td>Silt flux flowing into the river</td>
 <td>ton Δt⁻¹</td>
 </tr>
 <tr class="even">
-<td><code>land_surface_water_sand~to-river__mass_flow_rate</code></td>
+<td><code>land_surface_water_sand__to_river_mass_flow_rate</code></td>
 <td>Sand flux flowing into the river</td>
 <td>ton Δt⁻¹</td>
 </tr>
 <tr class="odd">
-<td><code>land_surface_water_aggregates~small~to-river__mass_flow_rate</code></td>
+<td><code>land_surface_water_small_aggregates__to_river_mass_flow_rate</code></td>
 <td>Small aggregates flux flowing into the river</td>
 <td>ton Δt⁻¹</td>
 </tr>
 <tr class="even">
-<td><code>land_surface_water_aggregates~large~to-river__mass_flow_rate</code></td>
+<td><code>land_surface_water_large_aggregates__to_river_mass_flow_rate</code></td>
 <td>Large aggregates flux flowing into the river</td>
 <td>ton Δt⁻¹</td>
 </tr>
@@ -1966,7 +2042,7 @@ td, th {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>river_bottom-and-bank_sediment__median_diameter</code></td>
+<td><code>river_bottom_and_bank_sediment__median_diameter</code></td>
 <td>Median diameter in the river bed/bank</td>
 <td>mm</td>
 <td>0.1</td>
@@ -2002,31 +2078,31 @@ td, th {
 <td>-</td>
 </tr>
 <tr class="even">
-<td><code>reservoir_water_sediment~bedload__trapping_efficiency</code></td>
+<td><code>reservoir_water_sediment__bedload_trapping_efficiency</code></td>
 <td>Reservoir sediment bedload trapping efficiency</td>
 <td>-</td>
 <td>1.0</td>
 </tr>
 <tr class="odd">
-<td><code>river_bottom-and-bank_clay__mass_fraction</code></td>
+<td><code>river_bottom_and_bank_clay__mass_fraction</code></td>
 <td>River bed/bank content clay</td>
 <td>-</td>
 <td>0.15</td>
 </tr>
 <tr class="even">
-<td><code>river_bottom-and-bank_silt__mass_fraction</code></td>
+<td><code>river_bottom_and_bank_silt__mass_fraction</code></td>
 <td>River bed/bank content silt</td>
 <td>-</td>
 <td>0.65</td>
 </tr>
 <tr class="odd">
-<td><code>river_bottom-and-bank_sand__mass_fraction</code></td>
+<td><code>river_bottom_and_bank_sand__mass_fraction</code></td>
 <td>River bed/bank content sand</td>
 <td>-</td>
 <td>0.15</td>
 </tr>
 <tr class="even">
-<td><code>river_bottom-and-bank_gravel__mass_fraction</code></td>
+<td><code>river_bottom_and_bank_gravel__mass_fraction</code></td>
 <td>River bed/bank content gravel</td>
 <td>-</td>
 <td>0.05</td>
@@ -2050,13 +2126,13 @@ td, th {
 <td>200.0</td>
 </tr>
 <tr class="even">
-<td><code>sediment_aggregates~small__mean_diameter</code></td>
+<td><code>sediment_small_aggregates__mean_diameter</code></td>
 <td>Small aggregates mean diameter</td>
 <td>µm</td>
 <td>30.0</td>
 </tr>
 <tr class="odd">
-<td><code>sediment_aggregates~large__mean_diameter</code></td>
+<td><code>sediment_large_aggregates__mean_diameter</code></td>
 <td>Large aggregates mean diameter</td>
 <td>µm</td>
 <td>500.0</td>
@@ -2102,12 +2178,12 @@ td, th {
 <td>ton</td>
 </tr>
 <tr class="even">
-<td><code>river_bed_aggregates~small__mass</code></td>
+<td><code>river_bed_small_aggregates__mass</code></td>
 <td>Small aggregates stored on the river bed after deposition</td>
 <td>ton</td>
 </tr>
 <tr class="odd">
-<td><code>river_bed_aggregates~large__mass</code></td>
+<td><code>river_bed_large_aggregates__mass</code></td>
 <td>Large aggregates stored on the river bed after deposition</td>
 <td>ton</td>
 </tr>
@@ -2132,12 +2208,12 @@ td, th {
 <td>ton</td>
 </tr>
 <tr class="even">
-<td><code>river_water_aggregates~small__mass</code></td>
+<td><code>river_water_small_aggregates__mass</code></td>
 <td>Small aggregates left in cell</td>
 <td>ton</td>
 </tr>
 <tr class="odd">
-<td><code>river_water_aggregates~large__mass</code></td>
+<td><code>river_water_large_aggregates__mass</code></td>
 <td>Large aggregates left in cell</td>
 <td>ton</td>
 </tr>
@@ -2162,12 +2238,12 @@ td, th {
 <td>ton Δt⁻¹</td>
 </tr>
 <tr class="even">
-<td><code>river_water_aggregates~small__mass_flow_rate</code></td>
+<td><code>river_water_small_aggregates__mass_flow_rate</code></td>
 <td>Sediment flux (small aggregates)</td>
 <td>ton Δt⁻¹</td>
 </tr>
 <tr class="odd">
-<td><code>river_water_aggregates~large__mass_flow_rate</code></td>
+<td><code>river_water_large_aggregates__mass_flow_rate</code></td>
 <td>Sediment flux (large aggregates)</td>
 <td>ton Δt⁻¹</td>
 </tr>
@@ -2179,8 +2255,8 @@ td, th {
 </tbody>
 </table>
 </section>
-<section id="output-8" class="level4">
-<h4 class="anchored" data-anchor-id="output-8">Output</h4>
+<section id="output-9" class="level4">
+<h4 class="anchored" data-anchor-id="output-9">Output</h4>
 <table class="table-striped table-hover caption-top table">
 <colgroup>
 <col style="width: 42%">
@@ -2196,12 +2272,102 @@ td, th {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>river_water_sediment~bedload__mass_concentration</code></td>
+<td><code>river_bed_clay__mass</code></td>
+<td>Clay stored on the river bed after deposition</td>
+<td>ton</td>
+</tr>
+<tr class="even">
+<td><code>river_bed_silt__mass</code></td>
+<td>Silt stored on the river bed after deposition</td>
+<td>ton</td>
+</tr>
+<tr class="odd">
+<td><code>river_bed_sand__mass</code></td>
+<td>Sand stored on the river bed after deposition</td>
+<td>ton</td>
+</tr>
+<tr class="even">
+<td><code>river_bed_small_aggregates__mass</code></td>
+<td>Small aggregates stored on the river bed after deposition</td>
+<td>ton</td>
+</tr>
+<tr class="odd">
+<td><code>river_bed_large_aggregates__mass</code></td>
+<td>Large aggregates stored on the river bed after deposition</td>
+<td>ton</td>
+</tr>
+<tr class="even">
+<td><code>river_bed_gravel__mass</code></td>
+<td>Gravel stored on the river bed after deposition</td>
+<td>ton</td>
+</tr>
+<tr class="odd">
+<td><code>river_water_clay__mass</code></td>
+<td>Clay left in cell</td>
+<td>ton</td>
+</tr>
+<tr class="even">
+<td><code>river_water_silt__mass</code></td>
+<td>Silt left in cell</td>
+<td>ton</td>
+</tr>
+<tr class="odd">
+<td><code>river_water_sand__mass</code></td>
+<td>Sand left in cell</td>
+<td>ton</td>
+</tr>
+<tr class="even">
+<td><code>river_water_small_aggregates__mass</code></td>
+<td>Small aggregates left in cell</td>
+<td>ton</td>
+</tr>
+<tr class="odd">
+<td><code>river_water_large_aggregates__mass</code></td>
+<td>Large aggregates left in cell</td>
+<td>ton</td>
+</tr>
+<tr class="even">
+<td><code>river_water_gravel__mass</code></td>
+<td>Gravel left in cell</td>
+<td>ton?</td>
+</tr>
+<tr class="odd">
+<td><code>river_water_clay__mass_flow_rate</code></td>
+<td>Sediment flux (clay)</td>
+<td>ton Δt⁻¹</td>
+</tr>
+<tr class="even">
+<td><code>river_water_silt__mass_flow_rate</code></td>
+<td>Sediment flux (silt)</td>
+<td>ton Δt⁻¹</td>
+</tr>
+<tr class="odd">
+<td><code>river_water_sand__mass_flow_rate</code></td>
+<td>Sediment flux (sand)</td>
+<td>ton Δt⁻¹</td>
+</tr>
+<tr class="even">
+<td><code>river_water_small_aggregates__mass_flow_rate</code></td>
+<td>Sediment flux (small aggregates)</td>
+<td>ton Δt⁻¹</td>
+</tr>
+<tr class="odd">
+<td><code>river_water_large_aggregates__mass_flow_rate</code></td>
+<td>Sediment flux (large aggregates)</td>
+<td>ton Δt⁻¹</td>
+</tr>
+<tr class="even">
+<td><code>river_water_gravel__mass_flow_rate</code></td>
+<td>Sediment flux (gravel)</td>
+<td>ton Δt⁻¹</td>
+</tr>
+<tr class="odd">
+<td><code>river_water_sediment__bedload_mass_concentration</code></td>
 <td>Bed load sediment concentration in the river</td>
 <td>g m⁻³</td>
 </tr>
 <tr class="even">
-<td><code>river_water_sediment~suspended__mass_concentration</code></td>
+<td><code>river_water_sediment__suspended_mass_concentration</code></td>
 <td>Suspended sediemnt concentration in the river</td>
 <td>g m⁻³</td>
 </tr>
@@ -2293,13 +2459,14 @@ td, th {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
