@@ -64,7 +64,11 @@ function Base.getproperty(v::RiverFlowParameters, s::Symbol)
 end
 
 "Initialize river flow model parameters"
-function RiverFlowParameters(dataset::NCDataset, config::Config, domain::DomainRiver)
+function RiverFlowParameters(
+    dataset,
+    config::AbstractRoutingConfig,
+    domain::AbstractDomainRiver,
+)
     (; indices) = domain.network
     (; slope, flow_length, flow_width) = domain.parameters
     mannings_n = ncread(
@@ -87,8 +91,8 @@ end
 
 "Initialize river flow model boundary conditions"
 function RiverFlowBC(
-    dataset::NCDataset,
-    config::Config,
+    dataset,
+    config::AbstractRoutingConfig,
     network::NetworkRiver,
     reservoir::Union{ReservoirModel, Nothing},
 )
@@ -107,9 +111,9 @@ end
 
 "Initialize kinematic wave river flow model"
 function init_kinematic_wave_river_flow(
-    dataset::NCDataset,
-    config::Config,
-    domain::DomainRiver,
+    dataset,
+    config::AbstractRoutingConfig,
+    domain::AbstractDomainRiver,
     reservoir::Union{ReservoirModel, Nothing},
 )
     (; indices) = domain.network
@@ -186,9 +190,9 @@ end
 
 "Initialize kinematic wave overland flow model"
 function init_kinematic_wave_overland_flow(
-    dataset::NCDataset,
-    config::Config,
-    domain::DomainLand,
+    dataset,
+    config::AbstractRoutingConfig,
+    domain::AbstractDomainLand,
 )
     (; indices) = domain.network
     (; slope, surface_flow_width) = domain.parameters
@@ -292,7 +296,7 @@ end
 "Update overland flow model `OverlandFlowModel{<:KinematicWave}` for a single timestep"
 function kinwave_land_update!(
     overland_flow_model::OverlandFlowModel{<:KinematicWave},
-    domain::DomainLand,
+    domain::AbstractDomainLand,
     dt::Float64,
 )
     (; order_of_subdomains, order_subdomain, subdomain_indices, upstream_nodes) =
@@ -346,7 +350,7 @@ Timestepping within `dt` is either with a fixed timestep `dt_fixed` or adaptive.
 """
 function update_overland_flow_model!(
     overland_flow_model::OverlandFlowModel{<:KinematicWave},
-    domain::DomainLand,
+    domain::AbstractDomainLand,
     dt::Float64,
 )
     (; inwater) = overland_flow_model.boundary_conditions
@@ -386,7 +390,7 @@ end
 
 function update_floodplain_model!(
     river_flow_model::RiverFlowModel{T, F},
-    domain::DomainRiver,
+    domain::AbstractDomainRiver,
     dt::Float64,
 ) where {T <: KinematicWave, F <: FloodPlainModel{<:Manning}}
     (; floodplain) = river_flow_model
@@ -433,7 +437,7 @@ end
 
 update_floodplain_model!(
     river_flow_model::RiverFlowModel{T, F},
-    domain::DomainRiver,
+    domain::AbstractDomainRiver,
     dt::Float64,
 ) where {T <: KinematicWave, F <: Nothing} = nothing
 
@@ -491,7 +495,7 @@ end
 "Update river flow model `RiverFlowModel{<:KinematicWave}` for a single timestep"
 function kinwave_river_update!(
     river_flow_model::RiverFlowModel{<:KinematicWave},
-    domain::DomainRiver,
+    domain::AbstractDomainRiver,
     dt::Float64,
 )
     (; order_of_subdomains, order_subdomain, subdomain_indices, upstream_nodes) =
@@ -571,7 +575,7 @@ river channel capacity (`bankfull_storage`).
 """
 function river_channel_floodplain_exchange!(
     river_flow_model::RiverFlowModel{T, F},
-    parameters::RiverParameters,
+    parameters::AbstractRiverParameters,
     dt::Float64,
 ) where {T <: KinematicWave, F <: FloodPlainModel{<:Manning}}
     river_v = river_flow_model.variables
@@ -602,7 +606,7 @@ end
 
 river_channel_floodplain_exchange!(
     river_flow_model::RiverFlowModel{T, F},
-    parameters::RiverParameters,
+    parameters::AbstractRiverParameters,
     dt::Float64,
 ) where {T <: KinematicWave, F <: Nothing} = nothing
 
@@ -612,8 +616,8 @@ Timestepping within `dt` is either with a fixed timestep `dt_fixed` or adaptive.
 """
 function update_river_flow_model!(
     river_flow_model::RiverFlowModel{<:KinematicWave},
-    domain::Domain,
-    clock::Clock,
+    domain::AbstractDomain,
+    clock::AbstractRoutingClock,
     dt::Float64,
 )
     (; floodplain) = river_flow_model
@@ -710,7 +714,7 @@ timestep.
 function update_lateral_inflow!(
     river_flow_model::AbstractRiverFlowModel,
     external_models::NamedTuple,
-    domain::Domain,
+    domain::AbstractDomain,
     dt::Float64,
 )
     (; allocation, runoff, overland_flow, subsurface_flow) = external_models
@@ -740,8 +744,8 @@ Update boundary condition lateral inflow `inwater` of a kinematic wave overland 
 function update_lateral_inflow!(
     overland_flow_model::OverlandFlowModel{<:KinematicWave},
     external_models::NamedTuple,
-    domain::Domain,
-    config::Config,
+    domain::AbstractDomain,
+    config::AbstractRoutingConfig,
     dt::Float64,
 )
     (; soil, subsurface_flow, allocation) = external_models

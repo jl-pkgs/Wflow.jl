@@ -85,10 +85,10 @@ end
 
 "Initialize lateral subsurface flow model parameters"
 function LateralSsfParameters(
-    dataset::NCDataset,
-    config::Config,
+    dataset,
+    config::AbstractRoutingConfig,
     indices::Vector{CartesianIndex{2}},
-    soil::SbmSoilParameters,
+    soil::AbstractSoilParameters,
     area::Vector{Float64},
 )
     elevation = ncread(dataset, config, "land_surface__elevation", Routing; sel = indices)
@@ -142,10 +142,10 @@ end
 
 "Initialize lateral subsurface flow model"
 function LateralSSFModel(
-    dataset::NCDataset,
-    config::Config,
-    domain::Domain,
-    soil::SbmSoilModel,
+    dataset,
+    config::AbstractRoutingConfig,
+    domain::AbstractDomain,
+    soil::AbstractSoilModel,
 )
     (; land, river, drain) = domain
     (; indices) = land.network
@@ -171,7 +171,11 @@ function LateralSSFModel(
     return ssf_model
 end
 
-function update_fluxes!(subsurface_flow_model::LateralSSFModel, domain::Domain, dt::Float64)
+function update_fluxes!(
+    subsurface_flow_model::LateralSSFModel,
+    domain::AbstractDomain,
+    dt::Float64,
+)
     for bc in get_boundaries(subsurface_flow_model.boundary_conditions)
         indices = get_boundary_index(bc, domain)
         flux!(bc, subsurface_flow_model, indices, dt)
@@ -197,8 +201,8 @@ end
 
 function kinwave_subsurface_update!(
     subsurface_flow_model::LateralSSFModel,
-    soil_model::SbmSoilModel,
-    domain::Domain,
+    soil_model::AbstractSoilModel,
+    domain::AbstractDomain,
     dt::Float64,
 )
     (; order_of_subdomains, order_subdomain, subdomain_indices, upstream_nodes) =
@@ -278,8 +282,8 @@ either with a fixed timestep `dt_fixed` or adaptive.
 """
 function update_subsurface_flow_model!(
     subsurface_flow_model::LateralSSFModel,
-    soil_model::SbmSoilModel,
-    domain::Domain,
+    soil_model::AbstractSoilModel,
+    domain::AbstractDomain,
     dt::Float64,
 )
     (; to_river_cumulative) = subsurface_flow_model.variables
@@ -311,7 +315,7 @@ A stable time step is computed for each vector element based on the Courant time
 criterion. Li et al. (1975) found that the nonlinear scheme is unconditionally stable and
 that a wide range of dt/dx values can be used without loss of accuracy.
 """
-function stable_timestep(subsurface_flow_model::LateralSSFModel, domain::DomainLand)
+function stable_timestep(subsurface_flow_model::LateralSSFModel, domain::AbstractDomainLand)
     (; water_table_depth) = subsurface_flow_model.variables
     (; specific_yield, kh_profile) = subsurface_flow_model.parameters
     (; flow_length, slope) = domain.parameters

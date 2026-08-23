@@ -44,7 +44,11 @@
 end
 
 "Initialize reservoir model parameters"
-function ReservoirParameters(dataset::NCDataset, config::Config, network::NetworkReservoir)
+function ReservoirParameters(
+    dataset,
+    config::AbstractRoutingConfig,
+    network::NetworkReservoir,
+)
     (; indices_outlet) = network
 
     area = ncread(dataset, config, "reservoir_surface__area", Routing; sel = indices_outlet)
@@ -219,8 +223,8 @@ end
 
 "Initialize reservoir model variables"
 function ReservoirVariables(
-    dataset::NCDataset,
-    config::Config,
+    dataset,
+    config::AbstractRoutingConfig,
     network::NetworkReservoir,
     parameters::ReservoirParameters,
     waterlevel::Vector{Float64},
@@ -271,7 +275,7 @@ end
 end
 
 "Initialize reservoir model boundary conditions"
-function ReservoirBC(dataset::NCDataset, config::Config, network::NetworkReservoir)
+function ReservoirBC(dataset, config::AbstractRoutingConfig, network::NetworkReservoir)
     (; indices_outlet) = network
     external_inflow = ncread(
         dataset,
@@ -293,7 +297,7 @@ end
 end
 
 "Initialize reservoir model `SimpleReservoir`"
-function ReservoirModel(dataset::NCDataset, config::Config, network::NetworkReservoir)
+function ReservoirModel(dataset, config::AbstractRoutingConfig, network::NetworkReservoir)
     parameters, waterlevel = ReservoirParameters(dataset, config, network)
     variables = ReservoirVariables(dataset, config, network, parameters, waterlevel)
     boundary_conditions = ReservoirBC(dataset, config, network)
@@ -376,14 +380,14 @@ function interpolate_linear(x, xp, fp)
 end
 
 "Update the column index of reservoir rating curve HQ data"
-function update_index_hq!(reservoir_model::ReservoirModel, clock::Clock)
+function update_index_hq!(reservoir_model::ReservoirModel, clock::AbstractRoutingClock)
     (; outflow_curve_type, col_index_hq) = reservoir_model.parameters
     if ReservoirOutflowType.rating_curve in outflow_curve_type
         col_index_hq[1] = julian_day(clock.time - clock.dt)
     end
     return nothing
 end
-update_index_hq!(reservoir_model::Any, clock::Clock) = nothing
+update_index_hq!(reservoir_model::Any, clock::AbstractRoutingClock) = nothing
 
 "Update reservoir with rating curve type (`ouflowfunc`) 4 for a single timestep"
 function update_reservoir_simple(
@@ -648,7 +652,7 @@ end
 "Check if observed outflow is used for reservoirs"
 function using_observed_outflow(
     reservoir_model::Union{ReservoirModel, Nothing},
-    config::Config,
+    config::AbstractRoutingConfig,
 )
     par = "reservoir_water__outgoing_observed_volume_flow_rate"
     check =

@@ -120,8 +120,8 @@ end
 end
 
 function GroundwaterFlowParameters(
-    dataset::NCDataset,
-    config::Config,
+    dataset,
+    config::AbstractRoutingConfig,
     indices::Vector{CartesianIndex{2}},
     top::Vector{Float64},
     bottom::Vector{Float64},
@@ -169,8 +169,8 @@ end
 end
 
 function ConstantHead(
-    dataset::NCDataset,
-    config::Config,
+    dataset,
+    config::AbstractRoutingConfig,
     indices::Vector{CartesianIndex{2}},
 )
     constanthead = ncread(
@@ -238,10 +238,10 @@ storativity(A::GroundwaterFlowModel) = A.parameters.specific_yield
 
 "Initialize groundwater flow model"
 function GroundwaterFlowModel(
-    dataset::NCDataset,
-    config::Config,
-    domain::Domain,
-    soil::SbmSoilModel,
+    dataset,
+    config::AbstractRoutingConfig,
+    domain::AbstractDomain,
+    soil::AbstractSoilModel,
 )
     (; land, river, drain) = domain
 
@@ -568,7 +568,7 @@ maximum_head(gwf::GroundwaterFlowModel) = min.(gwf.variables.head, gwf.parameter
 
 function update_fluxes!(
     gwf::GroundwaterFlowModel,
-    domain::Domain,
+    domain::AbstractDomain,
     conductivity_profile::GwfConductivityProfileType.T,
     dt::Float64,
 )
@@ -582,7 +582,7 @@ function update_fluxes!(
     return nothing
 end
 
-function update_head!(gwf::GroundwaterFlowModel, soil::SbmSoilModel, dt::Float64)
+function update_head!(gwf::GroundwaterFlowModel, soil::AbstractSoilModel, dt::Float64)
     (; head, exfiltwater_cumulative, q_net) = gwf.variables
     (; area, specific_yield) = gwf.parameters
 
@@ -639,8 +639,8 @@ end
 
 function update_subsurface_flow_model!(
     gwf_model::GroundwaterFlowModel,
-    soil_model::SbmSoilModel,
-    domain::Domain,
+    soil_model::AbstractSoilModel,
+    domain::AbstractDomain,
     dt::Float64,
     conductivity_profile::GwfConductivityProfileType.T,
 )
@@ -670,7 +670,7 @@ get_flux_to_river(subsurface_flow_model::GroundwaterFlowModel, inds::Vector{Int}
 
 function sum_boundary_fluxes(
     gwf_model::AbstractSubsurfaceFlowModel,
-    domain::Domain;
+    domain::AbstractDomain;
     exclude = nothing,
 )
     (; boundary_conditions) = gwf_model

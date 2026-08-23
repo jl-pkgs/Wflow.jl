@@ -1,4 +1,4 @@
-abstract type AbstractSoilModel end
+abstract type AbstractSoilModel <: RiverRouting.AbstractSoilModel end
 
 "Struct for storing SBM soil model variables"
 @with_kw struct SbmSoilVariables{N}
@@ -84,7 +84,7 @@ abstract type AbstractSoilModel end
 end
 
 "Struct for storing SBM soil model parameters"
-@with_kw struct SbmSoilParameters{N, M, Kv}
+@with_kw struct SbmSoilParameters{N, M, Kv} <: RiverRouting.AbstractSoilParameters
     # Maximum number of soil layers [-]
     maximum_number_of_layers::Int
     # Number of soil layers [-]
@@ -1210,7 +1210,7 @@ function update_soil_water_flow!(
     return nothing
 end
 
-function update_ustorelayerdepth!(soil, zi_prev, water_table_depth, i)
+function update_ustorelayerdepth!(soil::SbmSoilModel, zi_prev, water_table_depth, i)
     v = soil.variables
     p = soil.parameters
 

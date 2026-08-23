@@ -87,3 +87,6 @@ function surface_routing!(
 
     return nothing
 end
+
+# Snow-free Wflow models do not require lateral snow transport.
+RiverRouting.lateral_snow_transport!(::NoSnowModel, ::DomainLand, ::Float64) = nothing

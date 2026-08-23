@@ -16,7 +16,11 @@ function check_timestepsize(timestepsize, currenttime, endtime)
 end
 
 "Initialize timestepping for kinematic wave river, overland and lateral subsurface flow models"
-function init_kinematic_wave_timestepping(config::Config, n::Int; domain::String)
+function init_kinematic_wave_timestepping(
+    config::AbstractRoutingConfig,
+    n::Int;
+    domain::String,
+)
     adaptive = config.model.kinematic_wave__adaptive_time_step_flag
     @info "Kinematic wave approach is used for $domain flow, adaptive timestepping = $adaptive."
     if adaptive

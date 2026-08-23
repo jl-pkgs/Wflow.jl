@@ -1,4 +1,4 @@
-abstract type AbstractSnowModel end
+abstract type AbstractSnowModel <: RiverRouting.AbstractSnowModel end
 
 "Struct for storing snow model variables"
 @with_kw struct SnowVariables

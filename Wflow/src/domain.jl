@@ -1,5 +1,5 @@
 "Struct to store (shared) land parameters"
-@with_kw struct LandParameters
+@with_kw struct LandParameters <: RiverRouting.AbstractLandParameters
     # cell length x direction [m]
     x_length::Vector{Float64} = Float64[]
     # cell length y direction [m]
@@ -29,7 +29,7 @@
 end
 
 "Struct to store (shared) river parameters"
-@with_kw struct RiverParameters
+@with_kw struct RiverParameters <: RiverRouting.AbstractRiverParameters
     # river flow width [m]
     flow_width::Vector{Float64} = Float64[]
     # river flow length [m]
@@ -44,12 +44,12 @@ end
     cell_area::Vector{Float64} = Float64[]
 end
 
-@kwdef struct DomainLand
+@kwdef struct DomainLand <: RiverRouting.AbstractDomainLand
     network::NetworkLand = NetworkLand()
     parameters::LandParameters = LandParameters()
 end
 
-@kwdef struct DomainRiver
+@kwdef struct DomainRiver <: RiverRouting.AbstractDomainRiver
     network::NetworkRiver = NetworkRiver()
     parameters::RiverParameters = RiverParameters()
 end
@@ -69,7 +69,7 @@ information for each domain like active indices in the 2D model domain and conne
 information for flow routing. The `land` and `river` domains contain shared parameters for
 each domain that can used by different model components.
 """
-@kwdef struct Domain
+@kwdef struct Domain <: RiverRouting.AbstractDomain
     land::DomainLand = DomainLand()
     river::DomainRiver = DomainRiver()
     reservoir::DomainReservoir = DomainReservoir()

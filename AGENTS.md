@@ -3,8 +3,9 @@
 Wflow — Julia hydrological modeling framework (Julia ≥ 1.10). Installation via `pixi.toml`.
 
 ## Repository layout
-- `Wflow/src/` — core package source
-- `Wflow/test/` — tests (`TestItemRunner.jl`, `@testitem` macros)
+- `Wflow/src/` — Wflow integration code and model adapters
+- `Wflow/test/` — Wflow integration tests (`TestItemRunner.jl`, `@testitem` macros)
+- `Wflow/RiverRouting.jl/` — standalone routing package and routing unit tests
 - `build/` — binary compilation scripts
 - `server/` — ZMQ-based BMI server
 - `docs/` — Quarto documentation (targets hydrologists); Julia code blocks execute using `docs/docs_utils.jl`
@@ -18,14 +19,15 @@ NCDatasets, BasicModelInterface, Graphs, Polyester, StaticArrays, CFTime, Access
 - **Standard name metadata** (`standard_name/`): `OrderedDict` mapping standard names → `ParameterMetadata` (lens, unit, default, type, flags). Used for NetCDF I/O, TOML binding, docs
 - **Config system** (`config_structure.jl`, `config_init.jl`, `config_utils.jl`): `Config` wraps TOML as typed `AbstractConfigSection` structs. `InputEntry` handles netCDF ref / uniform value / external name
 - **NetCDF I/O** (`io.jl`): `NCReader`/`Writer`; `ncread` combines config lookup + reading + defaults + unit conversion
-- **Network/graph** (`Wflow/RiverNetwork.jl/`): standalone package for drainage graphs, domain index maps, edge connectivity, and subdomain decomposition; `Wflow/src/network.jl` adapts NetCDF/config input to this API
+- **Network/graph** (`RiverGraphs`): standalone dependency for drainage graphs, domain index maps, edge connectivity, and subdomain decomposition; `Wflow/src/network.jl` adapts NetCDF/config input to this API
+- **Routing** (`Wflow/RiverRouting.jl/`): standalone package containing surface, river, reservoir, floodplain, groundwater, and lateral subsurface routing; `Wflow/src/adapters/river_routing_*.jl` provides Wflow-specific Config, NetCDF, soil, snow, clock, and Model coupling
 - **Threading** (`utils.jl`): `threaded_foreach` — `Threads.@spawn` (≤8 threads) or `Polyester.@batch`
 - **Numeric helpers** (`utils.jl`): `scurve`, `pow`, `tosecond`, `bounded_divide`, `lattometres`, `svectorscopy`, etc.
 
 ## Architecture
 - Central type: `Model{R, L, M, T}` — routing, land model, mass balance, model type tag
 - **Land models** (`AbstractLandModel`): vertical per-cell fluxes. `LandHydrologySBM` (hydrology), `SoilLossModel` (sediment)
-- **Routing** (`Routing{O,R,S}`): `overland_flow`, `river_flow`, `subsurface_flow` — each concrete or null (`No*` type)
+- **Routing** (`RiverRouting.Routing{O,R,S}`): `overland_flow`, `river_flow`, `subsurface_flow` — each concrete or null (`No*` type); Wflow preserves compatibility through `Wflow.*` aliases
 - **Model type tags** (dispatch singletons): `SbmModel`, `SbmGwfModel`, `SedimentModel`
 - **Immutable struct updates**: use `@reset` from Accessors.jl
 
@@ -82,16 +84,23 @@ double quotes (`\"`). PowerShell mangles nested double quotes; triple-quotes and
 `raw""` strings do not work reliably.
 
 ## Testing
+- Run tests in parallel with 16 Julia threads unless explicitly debugging single-thread behavior.
 - To run all tests:
 
 ```
-pixi run julia --project=Wflow -e 'using Pkg; Pkg.test()'
+JULIA_NUM_THREADS=16 pixi run julia --project=Wflow -e 'using Pkg; Pkg.test()'
 ```
 
-- To run a subset of test items filtered by name (e.g. unit tests only):
+- Run the independent routing package tests:
 
 ```
-pixi run julia --project=Wflow -e 'using Pkg; Pkg.test(test_args=[\"unit\"])'
+JULIA_NUM_THREADS=16 pixi run julia --project=Wflow/RiverRouting.jl -e 'using Pkg; Pkg.test()'
+```
+
+- To run a subset of Wflow test items filtered by name (e.g. unit tests only):
+
+```
+JULIA_NUM_THREADS=16 pixi run julia --project=Wflow -e 'using Pkg; Pkg.test(test_args=[\"unit\"])'
 ```
 
 - `TestItemRunner.jl` with `@testitem` (not `@testset`); unit tests prefixed `"unit: "`

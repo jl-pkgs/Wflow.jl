@@ -1,0 +1,281 @@
+@testitem "unit: connectivity" begin
+    include("support.jl")
+    ncol = 2
+    nrow = 3
+    shape = (ncol, nrow)
+    dx = [10.0, 20.0]
+    dy = [5.0, 15.0, 25.0]
+    collect_connections(con, cell_id) =
+        [con.rowval[nzi] for nzi in RiverRouting.connections(con, cell_id)]
+
+    @testset "connection_geometry: y" begin
+        I = CartesianIndex(1, 1)
+        J = CartesianIndex(2, 1)
+        @test RiverRouting.connection_geometry(I, J, dx, dy) == (2.5, 7.5, 10.0)
+        @test_throws Exception RiverRouting.connection_geometry(I, I, dx, dy)
+    end
+
+    @testset "connection_geometry: x" begin
+        I = CartesianIndex(1, 1)
+        J = CartesianIndex(1, 2)
+        @test RiverRouting.connection_geometry(I, J, dx, dy) == (5.0, 10.0, 5.0)
+        @test_throws Exception RiverRouting.connection_geometry(I, I, dx, dy)
+    end
+
+    @testset "Connectivity 1D(x)" begin
+        # +---+---+
+        # | 1 | 2 |
+        # +---+---+
+        domain = ones(Bool, (1, 2))
+        indices, reverse_indices = RiverGraphs.active_indices(domain, false)
+        conn = RiverRouting.Connectivity(indices, reverse_indices, dx, [5.0])
+        @test conn.ncell == 2
+        @test conn.nconnection == 2
+        @test conn.length1 == [5.0, 10.0]
+        @test conn.length2 == [10.0, 5.0]
+        @test conn.width == [5.0, 5.0]
+        @test conn.colptr == [1, 2, 3]
+        @test conn.rowval == [2, 1]
+        @test collect_connections(conn, 1) == [2]
+        @test collect_connections(conn, 2) == [1]
+    end
+
+    @testset "Connectivity 1D(y)" begin
+        # +---+
+        # | 1 |
+        # +---+
+        # | 2 |
+        # +---+
+        # | 3 |
+        # +---+
+        domain = ones(Bool, (3, 1))
+        indices, reverse_indices = RiverGraphs.active_indices(domain, false)
+        conn = RiverRouting.Connectivity(indices, reverse_indices, [10.0], dy)
+        @test conn.ncell == 3
+        @test conn.nconnection == 4
+        @test conn.length1 == [2.5, 7.5, 7.5, 12.5]
+        @test conn.length2 == [7.5, 2.5, 12.5, 7.5]
+        @test conn.width == [10.0, 10.0, 10.0, 10.0]
+        @test conn.colptr == [1, 2, 4, 5]
+        @test conn.rowval == [2, 1, 3, 2]
+        @test collect_connections(conn, 1) == [2]
+        @test collect_connections(conn, 2) == [1, 3]
+        @test collect_connections(conn, 3) == [2]
+    end
+
+    @testset "Connectivity 2D" begin
+        # +---+---+
+        # | 1 | 4 |
+        # +---+---+
+        # | 2 | 5 |
+        # +---+---+
+        # | 3 | 6 |
+        # +---+---+
+        domain = ones(Bool, (nrow, ncol))
+        indices, reverse_indices = RiverGraphs.active_indices(domain, false)
+        conn = RiverRouting.Connectivity(indices, reverse_indices, dx, dy)
+        @test conn.ncell == 6
+        @test conn.nconnection == 14
+        @test conn.colptr == [1, 3, 6, 8, 10, 13, 15]
+        @test conn.rowval == [2, 4, 1, 3, 5, 2, 6, 1, 5, 2, 4, 6, 3, 5]
+        @test collect_connections(conn, 1) == [2, 4]
+        @test collect_connections(conn, 2) == [1, 3, 5]
+        @test collect_connections(conn, 3) == [2, 6]
+        @test collect_connections(conn, 4) == [1, 5]
+        @test collect_connections(conn, 5) == [2, 4, 6]
+        @test collect_connections(conn, 6) == [3, 5]
+    end
+
+    @testset "Connectivity 2D - partially inactive" begin
+        # +---+---+
+        # | 1 | 3 |
+        # +---+---+
+        # | X | 4 |
+        # +---+---+
+        # | 2 | 5 |
+        # +---+---+
+        domain = ones(Bool, (nrow, ncol))
+        domain[2, 1] = false
+        indices, reverse_indices = RiverGraphs.active_indices(domain, false)
+        conn = RiverRouting.Connectivity(indices, reverse_indices, dx, dy)
+        @test conn.ncell == 5
+        @test conn.nconnection == 8
+        @test conn.colptr == [1, 2, 3, 5, 7, 9]
+        @test conn.rowval == [3, 5, 1, 4, 3, 5, 2, 4]
+        @test collect_connections(conn, 1) == [3]
+        @test collect_connections(conn, 2) == [5]
+        @test collect_connections(conn, 3) == [1, 4]
+        @test collect_connections(conn, 4) == [3, 5]
+        @test collect_connections(conn, 5) == [2, 4]
+    end
+end
+
+@testitem "unit: aquifer, boundary conditions" begin
+    include("support.jl")
+    @testset "harmonicmean_conductance" begin
+        # harmonicmean_conductance(kH1, kH2, l1, l2, width)
+        @test RiverRouting.harmonicmean_conductance(
+            10.0 * 5.0,
+            10.0 * 5.0,
+            0.5,
+            0.5,
+            1.0,
+        ) == 50.0
+        @test RiverRouting.harmonicmean_conductance(
+            10.0 * 0.0,
+            10.0 * 5.0,
+            0.5,
+            0.5,
+            1.0,
+        ) == 0.0
+        @test RiverRouting.harmonicmean_conductance(
+            10.0 * 5.0,
+            10.0 * 0.0,
+            0.5,
+            0.5,
+            1.0,
+        ) == 0.0
+        # kD of 10 and 20 -> harmonicmean = 1/(1/10 + 1/20)
+        @test RiverRouting.harmonicmean_conductance(10.0 * 1.0, 10.0 * 2.0, 1.0, 1.0, 1.0) ≈
+              (6.0 + 2.0 / 3.0)
+    end
+
+    nrow = 1
+    ncol = 3
+    gwf_model = homogeneous_aquifer(nrow, ncol)
+    RiverRouting.initialize_conductance!(
+        gwf_model.parameters,
+        gwf_model.variables,
+        gwf_model.connectivity,
+    )
+    ncell = gwf_model.connectivity.ncell
+
+    @testset "saturated_thickness-unconfined" begin
+        @test RiverRouting.saturated_thickness(gwf_model, 1) == 0.0
+        @test RiverRouting.saturated_thickness(gwf_model, 2) == 7.5
+        @test RiverRouting.saturated_thickness(gwf_model, 3) == 10.0
+    end
+
+    @testset "conductance" begin
+        conductivity_profile = RiverRouting.GwfConductivityProfileType.uniform
+        @test RiverRouting.conductance(gwf_model, 2, 3, 3, conductivity_profile) ==
+              100.0 / 86400.0 # upstream sat. thickness
+        @test RiverRouting.conductance(gwf_model, 1, 2, 1, conductivity_profile) ==
+              75.0 / 86400.0 # upstream sat. thickness
+    end
+
+    @testset "minimum_head-unconfined" begin
+        original_head = copy(gwf_model.variables.head)
+        gwf_model.variables.head[1] = -10.0
+        @test RiverRouting.check_flux(-1.0, gwf_model, 1) == 0.0
+        @test RiverRouting.minimum_head(gwf_model)[1] == 0.0
+        gwf_model.variables.head .= original_head
+    end
+
+    @testset "stable_timestep" begin
+        conductivity_profile = RiverRouting.GwfConductivityProfileType.uniform
+        alpha_coefficient = 0.25
+        @test RiverRouting.stable_timestep(
+            gwf_model,
+            conductivity_profile,
+            alpha_coefficient,
+        ) == 0.0375 * 86400.0
+    end
+
+    # Parametrization in setup is as follows:
+    # [0.0, 7.5, 20.0],  # head
+    # fill(10.0, ncell),  # k
+    # fill(10.0, ncell),  # top
+    # fill(0.0, ncell),  # bottom
+
+    dt = 86400.0
+
+    @testset "flux-unconfined" begin
+        gwf_model.variables.q_net .= 0.0
+        conductivity_profile = RiverRouting.GwfConductivityProfileType.uniform
+        RiverRouting.flux!(gwf_model, conductivity_profile, dt)
+        # KD is based on upstream saturated thickness, i.e. 7.5 m and 20.0 m (which is capped to 10.0)
+        @test gwf_model.variables.q_net ≈ [562.5, 687.5, -1250.0] / 86400.0
+    end
+
+    @testset "river" begin
+        n = 2
+        parameters = RiverRouting.GwfRiverParameters(;
+            infiltration_conductance = fill(100.0 / 86400.0, n),
+            exfiltration_conductance = fill(200.0 / 86400.0, n),
+            bottom = fill(1.0, n),
+        )
+        variables = RiverRouting.GwfRiverVariables(;
+            n,
+            stage = fill(2.0, n),
+            storage = fill(20.0, n),
+        )
+        gwf_river_model = RiverRouting.GwfRiverModel(; parameters, variables)
+        gwf_model.variables.q_net_bnds .= 0.0
+        index = [1, 3]
+        RiverRouting.flux!(gwf_river_model, gwf_model, index, dt)
+        # infiltration, below bottom, flux is (stage - bottom) * inf_cond, limited by
+        # river storage (20.0)
+        @test gwf_model.variables.q_net_bnds[1] == 20.0 / 86400.0
+        # drainage, flux is (stage - head) * exf_cond
+        @test gwf_model.variables.q_net_bnds[3] == (2.0 - 20.0) * 200.0 / 86400.0
+    end
+
+    @testset "drainage" begin
+        n = 2
+        parameters = RiverRouting.DrainageParameters(;
+            elevation = [2.0, 2.0],
+            conductance = [100.0, 100.0] / 86400.0,
+        )
+        variables = RiverRouting.DrainageVariables(; n, flux = [0.0, 0.0])
+        drainage_model = RiverRouting.DrainageModel(; parameters, variables)
+        gwf_model.variables.q_net_bnds .= 0.0
+        index = [1, 2]
+        RiverRouting.flux!(drainage_model, gwf_model, index, dt)
+        @test gwf_model.variables.q_net_bnds[1] == 0.0
+        @test gwf_model.variables.q_net_bnds[2] == 100.0 * (2.0 - 7.5) / 86400.0
+    end
+
+    @testset "headboundary" begin
+        parameters =
+            RiverRouting.HeadBoundaryParameters(; conductance = [100.0, 100.0] / 86400.0)
+        variables = RiverRouting.HeadBoundaryVariables(;
+            head = [2.0, 2.0],
+            flux = [0.0, 0.0],
+            flux_cumulative = zeros(2),
+            flux_average = zeros(2),
+        )
+
+        headboundary = RiverRouting.HeadBoundary(; parameters, variables)
+        gwf_model.variables.q_net_bnds .= 0.0
+        index = [1, 2]
+        RiverRouting.flux!(headboundary, gwf_model, index, dt)
+        @test gwf_model.variables.q_net_bnds[1] == 100.0 * (2.0 - 0.0) / 86400.0
+        @test gwf_model.variables.q_net_bnds[2] == 100.0 * (2.0 - 7.5) / 86400.0
+    end
+
+    @testset "recharge" begin
+        n = 3
+
+        variables = RiverRouting.RechargeVariables(; n, rate = fill(1e-3 / 86400.0, n))
+        recharge_model = RiverRouting.RechargeModel(; n, variables)
+        gwf_model.variables.q_net_bnds .= 0.0
+        index = [1, 2, 3]
+        RiverRouting.flux!(recharge_model, gwf_model, index, dt)
+        @test all(gwf_model.variables.q_net_bnds .== 1.0e-3 * 100.0 / 86400.0)
+    end
+
+    @testset "well" begin
+        variables = RiverRouting.WellVariables(;
+            volumetric_rate = [-1000.0 / 86400.0],
+            flux = [0.0],
+            flux_average = [0.0],
+            flux_cumulative = [0.0],
+        )
+        well_model = RiverRouting.WellModel(; variables)
+        gwf_model.variables.q_net_bnds .= 0.0
+        index = [2]
+        RiverRouting.flux!(well_model, gwf_model, index, dt)
+        @test gwf_model.variables.q_net_bnds[2] == -1000.0 / 86400.0
+    end
+end

@@ -12,9 +12,6 @@ end
 struct NoAllocationLandModel <: AbstractAllocationModel
     n::Int
 end
-struct NoAllocationRiverModel <: AbstractAllocationModel
-    n::Int
-end
 
 "Struct to store non-irrigation water demand variables"
 @with_kw struct NonIrrigationDemandVariables
@@ -518,26 +515,6 @@ function DemandModel(dataset::NCDataset, config::Config, indices::Vector{Cartesi
     variables = DemandVariables(; n)
     return DemandModel(; domestic, industry, livestock, paddy, nonpaddy, variables)
 end
-
-"Struct to store river allocation model variables"
-@with_kw struct AllocationRiverVariables
-    n::Int
-    actual_surfacewater_abstraction::Vector{Float64} = zeros(n)       # actual surface water abstraction [m s⁻¹]
-    actual_surfacewater_abstraction_volume::Vector{Float64} = zeros(n)   # actual surface water abstraction [m³ s⁻¹]
-    available_surfacewater::Vector{Float64} = zeros(n)      # available surface water [m³]
-    non_irrigation_returnflow::Vector{Float64} = zeros(n)          # return flow from non irrigation [m s⁻¹]
-end
-
-"River allocation model"
-@with_kw struct AllocationRiverModel <: AbstractAllocationModel
-    n::Int
-    variables::AllocationRiverVariables = AllocationRiverVariables(; n)
-end
-
-get_nonirrigation_returnflow(allocation_model::AllocationRiverModel) =
-    allocation_model.variables.non_irrigation_returnflow
-get_nonirrigation_returnflow(allocation_model::NoAllocationRiverModel) =
-    Zeros(allocation_model.n)
 
 "Struct to store land allocation allocation model parameters"
 @with_kw struct AllocationLandParameters

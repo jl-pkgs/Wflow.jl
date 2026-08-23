@@ -48,8 +48,8 @@ end
 end
 
 function GwfRiverModel(
-    dataset::NCDataset,
-    config::Config,
+    dataset,
+    config::AbstractRoutingConfig,
     indices::Vector{CartesianIndex{2}},
 )
     infiltration_conductance = ncread(
@@ -126,8 +126,8 @@ end
 end
 
 function DrainageModel(
-    dataset::NCDataset,
-    config::Config,
+    dataset,
+    config::AbstractRoutingConfig,
     indices::Vector{CartesianIndex{2}},
 )
     elevation = ncread(dataset, config, "land_drain__elevation", Routing; sel = indices)
@@ -288,7 +288,10 @@ update_river_storage_stage!(
 
 flux!(::Nothing, ::AbstractSubsurfaceFlowModel, ::Vector{Int}, ::Float64) = nothing
 
-get_boundary_index(::RechargeModel, domain::Domain) = domain.land.network.land_indices
-get_boundary_index(::GwfRiverModel, domain::Domain) = domain.river.network.land_indices
-get_boundary_index(::DrainageModel, domain::Domain) = domain.drain.network.land_indices
-get_boundary_index(::Nothing, ::Domain) = Int[]
+get_boundary_index(::RechargeModel, domain::AbstractDomain) =
+    domain.land.network.land_indices
+get_boundary_index(::GwfRiverModel, domain::AbstractDomain) =
+    domain.river.network.land_indices
+get_boundary_index(::DrainageModel, domain::AbstractDomain) =
+    domain.drain.network.land_indices
+get_boundary_index(::Nothing, ::AbstractDomain) = Int[]

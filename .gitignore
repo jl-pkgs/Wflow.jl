@@ -26,3 +26,17 @@ Wflow/test/sbm_simple_temp.toml
 
 # pixi environments
 .pixi
+
+coverage
+*.md
+*.nc
+*.csv
+*.geojson
+*checkpoints*
+backup
+example
+project_GuanShan
+*.ipynb
+*.ps1
+main_pkgs.jl
+!Wflow/RiverRouting.jl/test/data/input/*.csv

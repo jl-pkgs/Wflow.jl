@@ -7,5 +7,6 @@ using Base.Threads
 const pattern = length(ARGS) > 0 ? ARGS[1] : ""
 
 with_logger(NullLogger()) do
-    @run_package_tests filter = ti -> occursin(pattern, ti.name)
+    @run_package_tests filter =
+        ti -> !occursin("RiverRouting.jl", ti.filename) && occursin(pattern, ti.name)
 end

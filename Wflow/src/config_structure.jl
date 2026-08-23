@@ -6,18 +6,15 @@ For configuration files we use TOML.
 =#
 
 # Option enumerators
-@enumx RoutingType kinematic_wave manning_staggered local_inertial
 @enumx ModelType sbm sbm_gwf sediment
 @enumx CalendarType standard gregorian proleptic_gregorian julian noleap _365_day all_leap _366_day _360_day
-@enumx GwfConductivityProfileType uniform exponential
-@enumx VerticalConductivityProfile exponential exponential_constant layered layered_exponential
 @enumx RainfallErosionType answers eurosem
 @enumx OverlandFlowErosionType answers
 @enumx LandTransportType yalinpart govers yalin
 @enumx RiverTransportType bagnold engelund yang kodatie molinas
 @enumx ReducerType maximum minimum mean median sum first last only
 
-abstract type AbstractConfigSection end
+abstract type AbstractConfigSection <: RiverRouting.AbstractRoutingConfig end
 const PropertyDictType = PropertyDict{String, Any, Dict{String, Any}}
 
 ###

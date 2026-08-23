@@ -63,8 +63,16 @@ using Statistics: mean, median, quantile!
 using TerminalLoggers: TerminalLogger
 using TOML: TOML
 
-import RiverNetwork
-import RiverNetwork:
+import RiverGraphs
+import RiverRouting
+import RiverRouting:
+    do_water_demand,
+    initialize_lateral_ssf_model!,
+    input_path,
+    ncread,
+    update_ustorelayerdepth!,
+    water_table_change
+import RiverGraphs:
     NetworkDrain,
     NetworkLand,
     NetworkReservoir,
@@ -72,7 +80,7 @@ import RiverNetwork:
     active_indices,
     get_drainage_network,
     network_subdomains
-using RiverNetwork:
+using RiverGraphs:
     DIRS,
     LDD_PIT,
     PCR_DIR,
@@ -92,6 +100,50 @@ using RiverNetwork:
     subbasins,
     subbasins_order
 
+# Preserve the existing `Wflow.*` API while RiverRouting owns routing implementations.
+const _RIVER_ROUTING_INTERFACE_NAMES = Set((
+    :AbstractDomain,
+    :AbstractDomainLand,
+    :AbstractDomainRiver,
+    :AbstractLandParameters,
+    :AbstractRiverParameters,
+    :AbstractRoutingClock,
+    :AbstractRoutingConfig,
+    :AbstractSnowModel,
+    :AbstractSoilModel,
+    :AbstractSoilParameters,
+    :GRAVITATIONAL_ACCELERATION,
+    :HQ,
+    :MISSING_VALUE,
+    :RiverRouting,
+    :SH,
+    :do_water_demand,
+    :initialize_lateral_ssf_model!,
+    :input_path,
+    :julian_day,
+    :lower_bound_drainable_porosity,
+    :ncread,
+    :pow,
+    :read_hq_csv,
+    :read_sh_csv,
+    :scurve,
+    :sum_at,
+    :threaded_foreach,
+    :to_enumx,
+    :update_ustorelayerdepth!,
+    :water_table_change,
+))
+for routing_name in names(RiverRouting; all = true, imported = false)
+    name_string = String(routing_name)
+    if routing_name ∉ _RIVER_ROUTING_INTERFACE_NAMES &&
+       !startswith(name_string, "#") &&
+       !startswith(name_string, "_") &&
+       Base.isidentifier(name_string) &&
+       !isdefined(@__MODULE__, routing_name)
+        @eval const $routing_name = RiverRouting.$routing_name
+    end
+end
+
 const CFDataset = Union{NCDataset, NCDatasets.MFDataset}
 const CFVariable_MF = Union{NCDatasets.CFVariable, NCDatasets.MFCFVariable}
 const VERSION =
@@ -99,7 +151,7 @@ const VERSION =
 
 const GRAVITATIONAL_ACCELERATION = 9.80665 # m s⁻²
 
-mutable struct Clock{T}
+mutable struct Clock{T} <: RiverRouting.AbstractRoutingClock
     time::T
     iteration::Int
     dt::Second
@@ -158,7 +210,6 @@ include("config_utils.jl")
 include("config_init.jl")
 include("io.jl")
 include("network.jl")
-include("routing/routing.jl")
 include("domain.jl")
 
 """
@@ -224,20 +275,7 @@ include("surfacewater/runoff.jl")
 include("soil/soil.jl")
 include("soil/soil_process.jl")
 include("sbm.jl")
-include("routing/utils.jl")
-include("routing/timestepping.jl")
-include("routing/subsurface/connectivity.jl")
-include("routing/subsurface/groundwater.jl")
-include("routing/subsurface/lateral_subsurface_flow.jl")
-include("routing/subsurface/subsurface_process.jl")
-include("routing/subsurface/boundary_conditions.jl")
-include("routing/surface/reservoir.jl")
-include("routing/surface/floodplain.jl")
-include("routing/surface/surface_flow.jl")
-include("routing/surface/surface_kinwave.jl")
-include("routing/surface/surface_staggered_scheme.jl")
-include("routing/surface/surface_routing.jl")
-include("routing/surface/surface_process.jl")
+include("adapters/river_routing_coupling.jl")
 include("demand/water_demand.jl")
 include("sbm_model.jl")
 include("sediment/erosion/erosion_process.jl")
@@ -254,7 +292,8 @@ include("sediment/sediment_transport/river_transport.jl")
 include("erosion.jl")
 include("sediment_flux.jl")
 include("sediment_model.jl")
-include("routing/initialize_routing.jl")
+include("adapters/river_routing_soil.jl")
+include("adapters/river_routing_init.jl")
 include("sbm_gwf_model.jl")
 include("standard_name/standard_name_utils.jl")
 include("standard_name/standard_name_domain.jl")
