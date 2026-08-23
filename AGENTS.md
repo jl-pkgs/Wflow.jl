@@ -18,7 +18,7 @@ NCDatasets, BasicModelInterface, Graphs, Polyester, StaticArrays, CFTime, Access
 - **Standard name metadata** (`standard_name/`): `OrderedDict` mapping standard names → `ParameterMetadata` (lens, unit, default, type, flags). Used for NetCDF I/O, TOML binding, docs
 - **Config system** (`config_structure.jl`, `config_init.jl`, `config_utils.jl`): `Config` wraps TOML as typed `AbstractConfigSection` structs. `InputEntry` handles netCDF ref / uniform value / external name
 - **NetCDF I/O** (`io.jl`): `NCReader`/`Writer`; `ncread` combines config lookup + reading + defaults + unit conversion
-- **Network/graph** (`network.jl`, `routing/utils.jl`, `subdomains.jl`): `flowgraph` converts LDD → DiGraph; `NetworkLand`/`NetworkRiver` store 1D↔2D index maps, edge connectivity, subdomain decomposition
+- **Network/graph** (`Wflow/RiverNetwork.jl/`): standalone package for drainage graphs, domain index maps, edge connectivity, and subdomain decomposition; `Wflow/src/network.jl` adapts NetCDF/config input to this API
 - **Threading** (`utils.jl`): `threaded_foreach` — `Threads.@spawn` (≤8 threads) or `Polyester.@batch`
 - **Numeric helpers** (`utils.jl`): `scurve`, `pow`, `tosecond`, `bounded_divide`, `lattometres`, `svectorscopy`, etc.
 

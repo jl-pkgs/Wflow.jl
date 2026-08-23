@@ -2,7 +2,7 @@
 
 julia_version = "1.12.7"
 manifest_format = "2.0"
-project_hash = "574610c5d6a18639f596ff8cdc87f0ebf5fb6a3f"
+project_hash = "b2a1b44f06b1136be7dd64dceb4bb58078c68e84"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -1776,6 +1776,12 @@ weakdeps = ["Distributed"]
     [deps.Revise.extensions]
     DistributedExt = "Distributed"
 
+[[deps.RiverNetwork]]
+deps = ["Accessors", "Graphs"]
+path = "Wflow/RiverNetwork.jl"
+uuid = "109d91e2-bed5-4e5d-86ee-73fe08070abe"
+version = "0.1.0"
+
 [[deps.Rmath]]
 deps = ["Random", "Rmath_jll"]
 git-tree-sha1 = "5b3d50eb374cea306873b371d3f8d3915a018f0b"
@@ -2234,7 +2240,7 @@ uuid = "e3aaa7dc-3e4b-44e0-be63-ffb868ccd7c1"
 version = "0.1.3"
 
 [[deps.Wflow]]
-deps = ["Accessors", "BasicModelInterface", "CFTime", "CompositionsBase", "Dates", "DelimitedFiles", "EnumX", "FillArrays", "Glob", "Graphs", "LoggingExtras", "NCDatasets", "OrderedCollections", "Parameters", "Polyester", "ProgressLogging", "PropertyDicts", "StaticArrays", "Statistics", "TOML", "TerminalLoggers"]
+deps = ["Accessors", "BasicModelInterface", "CFTime", "CompositionsBase", "Dates", "DelimitedFiles", "EnumX", "FillArrays", "Glob", "Graphs", "LoggingExtras", "NCDatasets", "OrderedCollections", "Parameters", "Polyester", "ProgressLogging", "PropertyDicts", "RiverNetwork", "StaticArrays", "Statistics", "TOML", "TerminalLoggers"]
 path = "Wflow"
 uuid = "d48b7d99-76e7-47ae-b1d5-ff0c1cf9a818"
 version = "1.1.0-dev"

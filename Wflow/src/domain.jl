@@ -109,10 +109,11 @@ function Domain(dataset::NCDataset, config::Config, ::Union{SbmModel, SbmGwfMode
             filter_upstream_nodes(network_river.graph, pits[network_river.indices])
     elseif river_routing == RoutingType.local_inertial ||
            river_routing == RoutingType.manning_staggered
-        nodes_at_edge, index_pit = NodesAtEdge(network_river)
+        pit_nodes = findall(isequal(LDD_PIT), network_river.local_drain_direction)
+        nodes_at_edge = NodesAtEdge(network_river.graph, pit_nodes)
         @reset network_river.nodes_at_edge = nodes_at_edge
-        @reset network_river.pit_indices = network_river.indices[index_pit]
-        @reset network_river.edges_at_node = EdgesAtNode(network_river)
+        @reset network_river.pit_indices = network_river.indices[pit_nodes]
+        @reset network_river.edges_at_node = EdgesAtNode(network_river.graph, nodes_at_edge)
     end
 
     if land_routing == RoutingType.kinematic_wave ||

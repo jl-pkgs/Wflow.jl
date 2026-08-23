@@ -1,17 +1,3 @@
-
-"Map from PCRaster LDD value to a CartesianIndex"
-const PCR_DIR = [
-    CartesianIndex(-1, -1),  # 1
-    CartesianIndex(0, -1),  # 2
-    CartesianIndex(1, -1),  # 3
-    CartesianIndex(-1, 0),  # 4
-    CartesianIndex(0, 0),  # 5
-    CartesianIndex(1, 0),  # 6
-    CartesianIndex(-1, 1),  # 7
-    CartesianIndex(0, 1),  # 8
-    CartesianIndex(1, 1),  # 9
-]
-
 """
     scurve(x, a, b, c)
 
@@ -42,60 +28,6 @@ function to_enumx(T, i::Int)
             ),
         )
     end
-end
-
-"Set at indices pit values (default = 5) in a gridded local drainage direction vector"
-function set_pit_ldd(
-    pits_2d::AbstractMatrix{Bool},
-    ldd::Vector{UInt8},
-    indices::Vector{CartesianIndex{2}};
-    pit::Integer = 5,
-)::Vector{UInt8}
-    pits = pits_2d[indices]
-    index = filter(i -> isequal(pits[i], true), 1:length(indices))
-    ldd[index] .= UInt8(pit)
-    return ldd
-end
-
-"Filter upstream neighbors of graph based on logical vector"
-function filter_upstream_nodes(
-    graph::SimpleDiGraph{Int},
-    vec_logical::Vector{Bool},
-)::Vector{Vector{Int}}
-    upstream_nodes = Vector{Int}[]
-    for v in topological_sort_by_dfs(graph)
-        ups_nodes = inneighbors(graph, v)
-        push!(upstream_nodes, filter(i -> !vec_logical[i], ups_nodes))
-    end
-    return upstream_nodes
-end
-
-"""
-    active_indices(subcatch_2d, nodata)
-
-Takes a 2D array of the subcatchments. And derive forward and reverse indices.
-
-1: Get a list of `CartesianIndex{2}`` that are active, based on a nodata value.
-These map from the 1D internal domain to the 2D external domain.
-
-2: Make a reverse index, a `Matrix{Int}``, which maps from the 2D external domain to
-the 1D internal domain, providing an Int which can be used as a linear index. Values of 0
-represent inactive cells.
-"""
-function active_indices(
-    subcatch_2d::AbstractMatrix,
-    nodata,
-)::Tuple{Vector{CartesianIndex{2}}, Matrix{Int}}
-    A = subcatch_2d
-    all_inds = CartesianIndices(size(A))
-    indices = filter(i -> !isequal(A[i], nodata), all_inds)
-
-    reverse_indices = zeros(Int, size(A))
-    for (i, I) in enumerate(indices)
-        reverse_indices[I] = i
-    end
-
-    return indices, reverse_indices
 end
 
 "Get active indices of `key` (standard name or model path) by prefix string matching."
@@ -548,47 +480,6 @@ tosecond(x::Hour) = Float64(Dates.value(Second(x)))
 tosecond(x::Minute) = Float64(Dates.value(Second(x)))
 tosecond(x::T) where {T <: DatePeriod} = Float64(Dates.value(Second(x)))
 tosecond(x::T) where {T <: TimePeriod} = x / convert(T, Second(1))
-
-"""
-    adjacent_nodes_at_edge(graph)
-
-Return the source node `src` and destination node `dst` of each edge of a directed `graph`.
-"""
-function adjacent_nodes_at_edge(
-    graph::SimpleDiGraph{Int},
-)::NamedTuple{(:src, :dst), Tuple{Vector{Int}, Vector{Int}}}
-    _edges = collect(edges(graph))
-    return (src = src.(_edges), dst = dst.(_edges))
-end
-
-"""
-    adjacent_edges_at_node(graph, nodes_at_edge)
-
-Return the source edge `src` and destination edge `dst` of each node of a directed `graph`.
-"""
-function adjacent_edges_at_node(
-    graph::SimpleDiGraph{Int},
-    nodes_at_edge,
-)::NamedTuple{(:src, :dst), Tuple{Vector{Vector{Int}}, Vector{Vector{Int}}}}
-    nodes = vertices(graph)
-    src_edge = Vector{Int}[]
-    dst_edge = copy(src_edge)
-    for i in 1:nv(graph)
-        push!(src_edge, findall(isequal(nodes[i]), nodes_at_edge.dst))
-        push!(dst_edge, findall(isequal(nodes[i]), nodes_at_edge.src))
-    end
-    return (src = src_edge, dst = dst_edge)
-end
-
-"Add `vertex` and `edge` to `pits` of a directed `graph`"
-function add_vertex_edge_graph!(graph::SimpleDiGraph{Int}, pits::Vector{Int})::Nothing
-    n = nv(graph)
-    for (i, v) in enumerate(pits)
-        add_vertex!(graph)
-        add_edge!(graph, v, n + i)
-    end
-    return nothing
-end
 
 """
     set_effective_flowwidth!(we_x::Vector{Float64}, we_y::Vector{Float64}, domain::Domain)

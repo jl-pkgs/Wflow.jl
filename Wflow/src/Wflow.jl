@@ -29,22 +29,16 @@ using EnumX: @enumx, EnumX
 using Glob: glob
 using Graphs:
     add_edge!,
-    add_vertex!,
     DiGraph,
-    dst,
-    edges,
     Graph,
     Graphs,
     induced_subgraph,
     inneighbors,
     is_cyclic,
     ne,
-    nv,
     outneighbors,
     SimpleDiGraph,
-    src,
-    topological_sort_by_dfs,
-    vertices
+    topological_sort_by_dfs
 using LoggingExtras:
     ConsoleLogger,
     Debug,
@@ -69,14 +63,41 @@ using Statistics: mean, median, quantile!
 using TerminalLoggers: TerminalLogger
 using TOML: TOML
 
+import RiverNetwork
+import RiverNetwork:
+    NetworkDrain,
+    NetworkLand,
+    NetworkReservoir,
+    NetworkRiver,
+    active_indices,
+    get_drainage_network,
+    network_subdomains
+using RiverNetwork:
+    DIRS,
+    LDD_PIT,
+    PCR_DIR,
+    EdgeConnectivity,
+    EdgesAtNode,
+    NodesAtEdge,
+    add_vertex_edge_graph!,
+    adjacent_edges_at_node,
+    adjacent_nodes_at_edge,
+    fillnodata_upstream,
+    filter_upstream_nodes,
+    flowgraph,
+    graph_from_nodes,
+    kinwave_set_subdomains,
+    set_pit_ldd,
+    stream_order,
+    subbasins,
+    subbasins_order
+
 const CFDataset = Union{NCDataset, NCDatasets.MFDataset}
 const CFVariable_MF = Union{NCDatasets.CFVariable, NCDatasets.MFCFVariable}
 const VERSION =
     VersionNumber(TOML.parsefile(joinpath(@__DIR__, "..", "Project.toml"))["version"])
 
 const GRAVITATIONAL_ACCELERATION = 9.80665 # m s⁻²
-# local drain direction pit [-]
-const LDD_PIT = 5
 
 mutable struct Clock{T}
     time::T
@@ -250,7 +271,6 @@ const STANDARD_NAME_MAPS = (
 
 include("utils.jl")
 include("bmi.jl")
-include("subdomains.jl")
 include("logging.jl")
 include("states.jl")
 include("mass_balance.jl")
